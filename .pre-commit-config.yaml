@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
       - id: check-added-large-files
       - id: check-merge-conflict
@@ -12,7 +12,7 @@ repos:
       - id: check-yaml
       - id: check-executables-have-shebangs
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.81.0
+    rev: v1.92.0
     hooks:
       - id: terraform_docs
         args:
@@ -26,11 +26,11 @@ repos:
   #      entry: export GOFLAGS="-buildvcs=false"
   #      args: ["markdown", "table", "--output-file", "README.md", "./"]
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.22
+    rev: v0.1.23
     hooks:
       - id: terraform-fmt
       - id: tflint
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: "2.3.296"
+    rev: "3.2.186"
     hooks:
       - id: checkov
