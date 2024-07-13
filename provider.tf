@@ -34,7 +34,7 @@ provider "aws" {
   }
 }
 
-provider "aws" {
+/*provider "aws" {
   alias  = "deployment"
   region = var.deploy_region
 
@@ -82,4 +82,4 @@ provider "aws" {
       project_full     = var.project_full
     }
   }
-}
+}*/

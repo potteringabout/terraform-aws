@@ -43,10 +43,11 @@ module "network" {
   source  = "./modules/vpc"
   egress  = var.egress
   ingress = var.ingress
-  region  = var.deploy_region
-  providers = {
+  region  = var.aws_region
+  //region  = var.deploy_region
+  /*providers = {
     aws = aws.deployment
-  }
+  }*/
 }
 
 /*module "squid_ecr" {
@@ -82,11 +83,11 @@ resource "aws_iam_role" "squid_execution" {
   name               = "squid-execution-role"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
-  provider           = aws.deployment
+  //provider           = aws.deployment
 }
 
 resource "aws_iam_role_policy_attachment" "squid_execution_policy" {
-  provider   = aws.deployment
+  //provider   = aws.deployment
   role       = aws_iam_role.squid_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
@@ -107,7 +108,7 @@ resource "aws_iam_role" "squid_task" {
   name               = "squid-task-role"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role_policy.json
-  provider           = aws.deployment
+  //provider           = aws.deployment
 }
 
 module "squid_task" {
@@ -116,9 +117,9 @@ module "squid_task" {
   task_role_arn         = aws_iam_role.squid_task.arn
   execution_role_arn    = aws_iam_role.squid_execution.arn
   container_definitions = local.container_definitions
-  providers = {
+  /*providers = {
     aws = aws.deployment
-  }
+  }*/
 }
 
 resource "aws_kms_key" "ecs_key" {
@@ -129,7 +130,7 @@ resource "aws_kms_key" "ecs_key" {
 }
 
 resource "aws_kms_key_policy" "ecs_key_policy" {
-  provider = aws.deployment
+  //provider = aws.deployment
   key_id   = aws_kms_key.ecs_key.id
   policy = jsonencode({
     Id = "logs"
@@ -168,9 +169,9 @@ module "squid_cluster" {
   cluster_name                         = "proxy-services"
   cluster_log_group_name               = "/proxy-services"
   cluster_execution_encryption_key_arn = aws_kms_key.ecs_key.arn
-  providers = {
+  /*providers = {
     aws = aws.deployment
-  }
+  }*/
 }
 
 /*module "squid_lb" {
@@ -196,9 +197,9 @@ module "squid_lb" {
     name = "squid"
     port = 3128
   }
-  providers = {
+  /*providers = {
     aws = aws.deployment
-  }
+  }*/
 }
 
 module "squid_service" {
@@ -215,9 +216,9 @@ module "squid_service" {
     security_group_id = module.squid_lb.security_group_id
 
   }
-  providers = {
+  /*providers = {
     aws = aws.deployment
-  }
+  }*/
 }
 
 module "proxy_address" {
@@ -226,9 +227,9 @@ module "proxy_address" {
   zone    = var.zone
   address = module.squid_lb.lb_address
 
-  providers = {
+  /*providers = {
     aws = aws.dns
-  }
+  }*/
 }
 
 module "reminder" {
