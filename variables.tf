@@ -5,11 +5,11 @@ variable "deployment_role_arn" {
   type        = string
 }
 
-variable "dns_role_arn" {
+/*variable "dns_role_arn" {
   description = "The ARN of role to be assumed for DNS updates"
   default     = ""
   type        = string
-}
+}*/
 
 
 variable "aws_region" {
@@ -87,7 +87,7 @@ variable "project_full" {
   type        = string
 }
 
-
+/*
 variable "squid_container_image" {
   type        = string
   description = "The Squid container to use"
@@ -119,4 +119,4 @@ variable "zone" {
 
 variable "sms_number" {
   type = string
-}
+}*/

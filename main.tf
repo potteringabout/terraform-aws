@@ -1,4 +1,4 @@
-locals {
+/*locals {
   container_definitions = [
     {
       name                   = var.squid_service_name
@@ -37,17 +37,14 @@ locals {
 
   }
 
-}
+}*/
 
 module "network" {
   source  = "./modules/vpc"
-  egress  = var.egress
-  ingress = var.ingress
+  egress  = true
+  ingress = false
   region  = var.aws_region
-  //region  = var.deploy_region
-  /*providers = {
-    aws = aws.deployment
-  }*/
+
 }
 
 /*module "squid_ecr" {
@@ -68,6 +65,7 @@ resource "aws_kms_key" "key" {
   provider                = aws.deployment
 }*/
 
+/*
 data "aws_iam_policy_document" "ecs_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -77,8 +75,9 @@ data "aws_iam_policy_document" "ecs_assume_role_policy" {
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
-}
+}*/
 
+/*
 resource "aws_iam_role" "squid_execution" {
   name               = "squid-execution-role"
   path               = "/"
@@ -119,9 +118,9 @@ module "squid_task" {
   container_definitions = local.container_definitions
   /*providers = {
     aws = aws.deployment
-  }*/
-}
-
+  }
+}*/
+/*
 resource "aws_kms_key" "ecs_key" {
   description             = "ECS Key"
   deletion_window_in_days = 10
@@ -162,8 +161,8 @@ resource "aws_kms_key_policy" "ecs_key_policy" {
     ]
     Version = "2012-10-17"
   })
-}
-
+}*/
+/*
 module "squid_cluster" {
   source                               = "./modules/ecs-cluster"
   cluster_name                         = "proxy-services"
@@ -171,8 +170,8 @@ module "squid_cluster" {
   cluster_execution_encryption_key_arn = aws_kms_key.ecs_key.arn
   /*providers = {
     aws = aws.deployment
-  }*/
-}
+  }
+}*/
 
 /*module "squid_lb" {
   source     = "./modules/alb"
@@ -187,6 +186,7 @@ module "squid_cluster" {
   }
 }*/
 
+/*
 module "squid_lb" {
   source      = "./modules/nlb"
   vpc_id      = module.network.vpc_id
@@ -199,9 +199,10 @@ module "squid_lb" {
   }
   /*providers = {
     aws = aws.deployment
-  }*/
-}
+  }
+}*/
 
+/*
 module "squid_service" {
   source           = "./modules/ecs-service"
   ecs_service_name = "squid"
@@ -218,9 +219,9 @@ module "squid_service" {
   }
   /*providers = {
     aws = aws.deployment
-  }*/
-}
-
+  }*
+}*/
+/*
 module "proxy_address" {
   source  = "./modules/route53"
   name    = "${var.environment}proxy"
@@ -229,11 +230,12 @@ module "proxy_address" {
 
   /*providers = {
     aws = aws.dns
-  }*/
-}
-
+  }
+}*/
+/*
 module "reminder" {
   source     = "./modules/sns"
   name       = "${var.environment}proxy"
   sms_number = var.sms_number
 }
+*/
