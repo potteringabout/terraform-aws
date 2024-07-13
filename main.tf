@@ -131,7 +131,7 @@ resource "aws_kms_key" "ecs_key" {
 
 resource "aws_kms_key_policy" "ecs_key_policy" {
   //provider = aws.deployment
-  key_id   = aws_kms_key.ecs_key.id
+  key_id = aws_kms_key.ecs_key.id
   policy = jsonencode({
     Id = "logs"
     Statement = [
