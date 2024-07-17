@@ -38,7 +38,7 @@ No modules.
 | <a name="input_egress"></a> [egress](#input\_egress) | n/a | `bool` | `false` | no |
 | <a name="input_ingress"></a> [ingress](#input\_ingress) | n/a | `bool` | `false` | no |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"eu-west-2"` | no |
-| <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | n/a | `string` | `"10.0.0.0/22"` | no |
+| <a name="input_vpc"></a> [vpc](#input\_vpc) | n/a | <pre>object(<br>    {<br>      cidr = string<br>      name = string<br>      subnets = map(<br>        list(<br>          object(<br>            {<br>              cidr = string<br>            }<br>          )<br>        )<br>      )<br>    }<br>  )</pre> | n/a | yes |
 
 ## Outputs
 

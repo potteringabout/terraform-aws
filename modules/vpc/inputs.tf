@@ -3,16 +3,35 @@ variable "region" {
   default = "eu-west-2"
 }
 
-variable "vpc_cidr" {
-  type    = string
-  default = "10.0.0.0/22"
+variable "vpc" {
+  type = object(
+    {
+      cidr = string
+      name = string
+      subnets = map(
+        list(
+          object(
+            {
+              cidr = string
+            }
+          )
+        )
+      )
+    }
+  )
+  validation {
+    condition     = can(cidrhost(var.vpc.cidr, 32))
+    error_message = "Invalid vpc cidr"
+  }
+
+  validation {
+    condition = alltrue(flatten([
+      for k, v in var.vpc.subnets :
+      [for ki, vi in v : can(cidrhost(vi.cidr, 32))]
+    ]))
+    error_message = "Subnet cidr invalid" # can't use local var here either
+  }
 }
-/*
-variable "subnets" {
-  type = map(object({
-    size = number
-  }))
-}*/
 
 variable "egress" {
   type    = bool

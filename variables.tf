@@ -120,3 +120,59 @@ variable "zone" {
 variable "sms_number" {
   type = string
 }*/
+
+variable "vpc" {
+  type = object(
+    {
+      cidr = string
+      name = string
+      subnets = map(
+        list(
+          object(
+            {
+              cidr = string
+            }
+          )
+        )
+      )
+    }
+  )
+
+  default = {
+    cidr = "10.0.0.0/16"
+    name = "blah"
+    subnets = {
+      access = [
+        {
+          cidr = "10.0.0.0/25"
+
+        },
+        {
+          cidr = "10.0.0.128/25"
+        }
+      ]
+      data = [
+        {
+          cidr = "10.0.0.0/25"
+        },
+        {
+          cidr = "10.0.0.128/25"
+        }
+      ]
+      app = [
+        {
+          cidr = "10.0.0.0/25"
+        },
+        {
+          cidr = "10.0.0.128/25"
+        }
+      ]
+    }
+
+
+
+
+
+  }
+
+}
