@@ -145,7 +145,6 @@ variable "vpc" {
       access = [
         {
           cidr = "10.0.0.0/25"
-
         },
         {
           cidr = "10.0.0.128/25"

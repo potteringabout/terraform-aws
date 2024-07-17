@@ -5,7 +5,8 @@ locals {
   network_subnets = flatten([
     for network_key, network in var.vpc.subnets : [
       for idx, subnet in network : {
-        subnet_name       = "${network_key}${idx}"
+        #subnet_name       = "${network_key}${idx}"
+        subnet_name       = "${network_key}${var.region}a" + element(["a", "b", "c"], idx)
         cidr              = subnet.cidr
         availability_zone = format("%s%s", var.region, element(["a", "b", "c"], idx))
         zone              = network_key
