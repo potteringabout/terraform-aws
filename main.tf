@@ -41,8 +41,8 @@
 
 module "network" {
   source  = "./modules/vpc"
-  egress  = true
-  ingress = false
+  egress  = false
+  ingress = true
   region  = var.aws_region
   vpc     = var.vpc
 
