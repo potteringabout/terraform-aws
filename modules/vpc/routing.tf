@@ -20,6 +20,7 @@ resource "aws_route_table_association" "access" {
 # If egress is not set we just create a single route table for all app subnets
 resource "aws_route_table" "app" {
   for_each = tomap(var.egress ? local.access_subnets : { "app" : {} })
+  #for_each = tomap(var.egress ? local.app_subnets : { "app" : {} })
 
   vpc_id = aws_vpc.main.id
 
@@ -43,13 +44,13 @@ resource "aws_route_table" "app" {
 }*/
 
 locals {
-  app_subnets = {
+  /*app_subnets = {
     for subnet in local.network_subnets : subnet.subnet_name => subnet if subnet.zone == "app"
-  }
+  }*/
 
   app_route_table_association_egress = {
     #for subnet in local.app_subnets : subnet.subnet_name => "access${subnet.subnet_number}"
-    for subnet in local.app_subnets : subnet.subnet_name => subnet.subnet_name
+    for subnet in local.app_subnets : subnet.subnet_name => replace(subnet.subnet_name, "access", "app")
   }
   app_route_table_association_noegress = {
     for subnet in local.app_subnets : subnet.subnet_name => "app"
