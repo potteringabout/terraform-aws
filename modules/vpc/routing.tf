@@ -50,7 +50,7 @@ locals {
 
   app_route_table_association_egress = {
     #for subnet in local.app_subnets : subnet.subnet_name => "access${subnet.subnet_number}"
-    for subnet in local.app_subnets : subnet.subnet_name => subnet.subnet_name
+    for subnet in local.app_subnets : subnet.subnet_name => replace(subnet.subnet_name, "app", "access")
   }
   app_route_table_association_noegress = {
     for subnet in local.app_subnets : subnet.subnet_name => "app"
