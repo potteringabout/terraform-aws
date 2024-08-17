@@ -57,10 +57,11 @@ module "network" {
 
 
 module "ses" {
-  source     = "./modules/ses"
-  domain     = "dev.potteringabout.net"
-  bucket     = module.s3.bucket
-  bucket_key = module.s3.bucket_key
+  source      = "./modules/ses"
+  domain      = "dev.potteringabout.net"
+  bucket      = module.s3.bucket
+  bucket_key  = module.s3.bucket_key
+  environment = var.environment
 }
 
 /*module "squid_ecr" {
