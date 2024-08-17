@@ -40,3 +40,10 @@ resource "aws_ses_receipt_rule" "store" {
     position          = 2
   }
 }
+
+module "s3" {
+  source      = "../s3"
+  project     = "potteringabout"
+  environment = var.environment
+  bucket_name = "remarkable"
+}

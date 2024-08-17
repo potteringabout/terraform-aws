@@ -7,6 +7,30 @@ resource "aws_s3_bucket" "this" {
   bucket = "${var.project}-${var.environment}-${var.bucket_name}"
 }
 
+/*
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AllowSESPuts",
+      "Effect":"Allow",
+      "Principal":{
+        "Service":"ses.amazonaws.com"
+      },
+      "Action":"s3:PutObject",
+      "Resource":"arn:aws:s3:::myBucket/*",
+      "Condition":{
+        "StringEquals":{
+          "AWS:SourceAccount":"111122223333",
+          "AWS:SourceArn": "arn:aws:ses:region:111122223333:receipt-rule-set/rule_set_name:receipt-rule/receipt_rule_name"
+        }
+      }
+    }
+  ]
+}*/
+
+
+
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
@@ -22,6 +46,24 @@ resource "aws_kms_key" "this" {
   description             = "This key is used to encrypt ${var.project}-${var.environment}-${var.bucket_name} bucket objects"
   deletion_window_in_days = 10
 }
+/*
+{
+  "Sid": "AllowSESToEncryptMessagesBelongingToThisAccount",
+  "Effect": "Allow",
+  "Principal": {
+    "Service":"ses.amazonaws.com"
+  },
+  "Action": [
+    "kms:GenerateDataKey*"
+  ],
+  "Resource": "*",
+  "Condition":{
+        "StringEquals":{
+          "AWS:SourceAccount":"111122223333",
+          "AWS:SourceArn": "arn:aws:ses:region:111122223333:receipt-rule-set/rule_set_name:receipt-rule/receipt_rule_name"
+        }
+      }
+}*/
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id

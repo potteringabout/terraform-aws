@@ -21,7 +21,6 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_network"></a> [network](#module\_network) | ./modules/vpc | n/a |
-| <a name="module_s3"></a> [s3](#module\_s3) | ./modules/s3 | n/a |
 | <a name="module_ses"></a> [ses](#module\_ses) | ./modules/ses | n/a |
 
 ## Resources

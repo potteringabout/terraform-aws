@@ -9,3 +9,7 @@ variable "bucket" {
 variable "bucket_key" {
   type = string
 }
+
+variable "environment" {
+  type = string
+}

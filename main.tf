@@ -48,12 +48,12 @@ module "network" {
 
 }
 
-module "s3" {
+/*module "s3" {
   source      = "./modules/s3"
   project     = var.project
   environment = var.environment
   bucket_name = "remarkable"
-}
+}*/
 
 
 module "ses" {
