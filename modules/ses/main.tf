@@ -34,9 +34,9 @@ resource "aws_ses_receipt_rule" "store" {
   }
 
   s3_action {
-    bucket_name       = var.bucket
+    bucket_name       = module.s3.bucket
     object_key_prefix = "/remarkable/in"
-    kms_key_arn       = var.bucket_key
+    kms_key_arn       = module.s3.bucket_key
     position          = 2
   }
 }
