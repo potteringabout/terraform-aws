@@ -48,12 +48,20 @@ module "network" {
 
 }
 
-module "ses" {
-  source = "./modules/ses"
-  domain = "dev.potteringabout.net"
+module "s3" {
+  source      = "./modules/s3"
+  project     = var.project
+  environment = var.environment
+  bucket_name = "remarkable"
 }
 
 
+module "ses" {
+  source     = "./modules/ses"
+  domain     = "dev.potteringabout.net"
+  bucket     = module.s3.bucket
+  bucket_key = module.s3.bucket_key
+}
 
 /*module "squid_ecr" {
   source   = "./modules/ecr"
