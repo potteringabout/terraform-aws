@@ -48,6 +48,15 @@ module "network" {
 
 }
 
+module "ses" {
+  source = "./modules/ses"
+  region = var.aws_region
+  domain = "dev.potteringabout.net."
+
+}
+
+
+
 /*module "squid_ecr" {
   source   = "./modules/ecr"
   ecr_name = "squid"
