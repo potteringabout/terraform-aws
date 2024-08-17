@@ -50,9 +50,7 @@ module "network" {
 
 module "ses" {
   source = "./modules/ses"
-  region = var.aws_region
   domain = "dev.potteringabout.net."
-
 }
 
 
