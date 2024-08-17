@@ -50,7 +50,7 @@ module "network" {
 
 module "ses" {
   source = "./modules/ses"
-  domain = "dev.potteringabout.net."
+  domain = "dev.potteringabout.net"
 }
 
 
