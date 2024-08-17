@@ -7,28 +7,10 @@ resource "aws_s3_bucket" "this" {
   bucket = "${var.project}-${var.environment}-${var.bucket_name}"
 }
 
-/*
-{
-  "Version":"2012-10-17",
-  "Statement":[
-    {
-      "Sid":"AllowSESPuts",
-      "Effect":"Allow",
-      "Principal":{
-        "Service":"ses.amazonaws.com"
-      },
-      "Action":"s3:PutObject",
-      "Resource":"arn:aws:s3:::myBucket/*",
-      "Condition":{
-        "StringEquals":{
-          "AWS:SourceAccount":"111122223333",
-          "AWS:SourceArn": "arn:aws:ses:region:111122223333:receipt-rule-set/rule_set_name:receipt-rule/receipt_rule_name"
-        }
-      }
-    }
-  ]
-}*/
-
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.example.id
+  policy = var.bucket_policy_json
+}
 
 
 resource "aws_s3_bucket_public_access_block" "this" {

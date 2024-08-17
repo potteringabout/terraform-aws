@@ -35,15 +35,51 @@ resource "aws_ses_receipt_rule" "store" {
 
   s3_action {
     bucket_name       = module.s3.bucket
-    object_key_prefix = "/remarkable/in"
+    object_key_prefix = "/in"
     kms_key_arn       = module.s3.bucket_key
     position          = 2
   }
 }
 
 module "s3" {
-  source      = "../s3"
-  project     = "potteringabout"
-  environment = var.environment
-  bucket_name = "remarkable"
+  source             = "../s3"
+  project            = "potteringabout"
+  environment        = var.environment
+  bucket_name        = "remarkable"
+  bucket_policy_json = data.aws_iam_policy_document.policy.json
+}
+
+data "aws_iam_policy_document" "policy" {
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["ses.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:PutObject",
+    ]
+
+    resources = [
+      "${modules.s3.bucket_arn}/*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceAccount"
+
+      values = [
+        data.aws_caller_identity.current.account_id
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
+      ]
+    }
+  }
 }
