@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "policy" {
     ]
 
     resources = [
-      "${modules.s3.bucket_arn}/*"
+      "${module.s3.bucket_arn}/*"
     ]
 
     condition {
