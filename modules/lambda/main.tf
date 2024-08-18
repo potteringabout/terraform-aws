@@ -38,7 +38,7 @@ resource "aws_lambda_function" "this" {
   #checkov:skip=CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
   #checkov:skip=CKV_AWS_272: "Ensure AWS Lambda function is configured to validate code-signing"
 
-  filename      = "${path.temp}/lambda_function.zip"
+  filename      = "/tmp/lambda_function.zip"
   function_name = var.function_name
   role          = aws_iam_role.this.arn
   handler       = var.function_handler
