@@ -154,12 +154,15 @@ data "aws_iam_policy_document" "kms_policy" {
 
 
 module "lambda" {
-  source               = "../lambda"
-  function_name        = "email-extract"
-  function_file        = "${path.root}/lambda/extract-mail.py"
-  function_runtime     = "python3.12"
-  function_handler     = "extract-mail.lambder_handler"
-  function_policy_json = data.aws_iam_policy_document.lambda_policy.json
+  source                = "../lambda"
+  function_name         = "email-extract"
+  function_file         = "${path.root}/lambda/extract-mail.py"
+  function_runtime      = "python3.12"
+  function_handler      = "extract-mail.lambder_handler"
+  function_policy_json  = data.aws_iam_policy_document.lambda_policy.json
+  function_exec_service = "ses.amazonaws.com"
+  function_exec_arn     = "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
+
 
 }
 
@@ -169,10 +172,6 @@ data "aws_iam_policy_document" "lambda_policy" {
   #checkov:skip=CKV_AWS_109: "Ensure IAM policies does not allow permissions management / resource exposure without constraints"
   #checkov:skip=CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
   statement {
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
-    }
 
     actions = [
       "s3:*",

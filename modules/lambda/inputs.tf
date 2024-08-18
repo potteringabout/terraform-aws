@@ -25,3 +25,11 @@ variable "function_runtime" {
 variable "function_policy_json" {
   type = string
 }
+
+variable "function_exec_arn" {
+  type = string
+}
+
+variable "function_exec_service" {
+  type = string
+}

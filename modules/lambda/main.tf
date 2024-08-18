@@ -53,3 +53,11 @@ resource "aws_lambda_function" "this" {
     }
   }
 }
+
+resource "aws_lambda_permission" "this" {
+  statement_id  = "AllowExecutionFromSES"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.this.function_name
+  principal     = var.function_exec_service
+  source_arn    = var.function_exec_arn
+}
