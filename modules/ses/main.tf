@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "s3_policy" {
       "${module.s3.bucket_arn}/*"
     ]
 
-    condition {
+    /*condition {
       test     = "StringEquals"
       variable = "AWS:SourceAccount"
 
@@ -122,7 +122,7 @@ data "aws_iam_policy_document" "kms_policy" {
       "*"
     ]
 
-    condition {
+    /*condition {
       test     = "StringEquals"
       variable = "AWS:SourceAccount"
 
