@@ -10,6 +10,14 @@ resource "aws_route53_record" "this" {
   records = [aws_ses_domain_identity.this.verification_token]
 }
 
+resource "aws_route53_record" "this2" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.domain
+  type    = "MX"
+  ttl     = "600"
+  records = ["10 inbound-smtp.${data.aws_region.current.name}.amazonaws.com"]
+}
+
 resource "aws_ses_domain_identity_verification" "this" {
   domain = aws_ses_domain_identity.this.id
 
