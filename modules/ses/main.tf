@@ -72,16 +72,16 @@ data "aws_iam_policy_document" "s3_policy" {
       values = [
         data.aws_caller_identity.current.account_id
       ]
-    }
+    }*/
 
-    /*condition {
+    condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
 
       values = [
         "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
       ]
-    }*/
+    }
   }
 }
 
@@ -129,15 +129,15 @@ data "aws_iam_policy_document" "kms_policy" {
       values = [
         data.aws_caller_identity.current.account_id
       ]
-    }
+    }*/
 
-    /*condition {
+    condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
 
       values = [
         "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
       ]
-    }*/
+    }
   }
 }
