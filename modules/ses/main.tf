@@ -20,6 +20,10 @@ resource "aws_ses_receipt_rule_set" "this" {
   rule_set_name = "remarkable-rules"
 }
 
+resource "aws_ses_active_receipt_rule_set" "this" {
+  rule_set_name = "remarkable-rules"
+}
+
 resource "aws_ses_receipt_rule" "store" {
   name          = "store"
   rule_set_name = aws_ses_receipt_rule_set.this.rule_set_name
@@ -90,8 +94,6 @@ data "aws_iam_policy_document" "kms_policy" {
   #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
   #checkov:skip=CKV_AWS_109: "Ensure IAM policies does not allow permissions management / resource exposure without constraints"
   #checkov:skip=CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
-
-
   statement {
     principals {
       type        = "AWS"
