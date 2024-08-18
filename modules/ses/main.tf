@@ -39,17 +39,17 @@ resource "aws_ses_receipt_rule" "store" {
   enabled       = true
   scan_enabled  = true
 
-  add_header_action {
-    header_name  = "Custom-Header"
-    header_value = "Added by SES for Remarkable"
-    position     = 1
-  }
-
   s3_action {
     bucket_name       = module.s3.bucket
     object_key_prefix = "/in"
     kms_key_arn       = module.s3.bucket_key
-    position          = 2
+    position          = 1
+  }
+
+  lambda_action {
+    function_arn    = module.lambda.function_arn
+    invocation_type = "Event"
+    position        = 2
   }
 }
 
@@ -150,4 +150,40 @@ data "aws_iam_policy_document" "kms_policy" {
       ]
     }
   }
+}
+
+
+module "lambda" {
+  source               = "../lambda"
+  function_name        = "email-extract"
+  function_file        = "${path.root}/lambda/extract-mail.py"
+  function_runtime     = "python3.12"
+  function_handler     = "extract-mail.lambder_handler"
+  function_policy_json = data.aws_iam_policy_document.lambda_policy.json
+
+}
+
+data "aws_iam_policy_document" "lambda_policy" {
+  #checkov:skip=CKV_AWS_108: "Ensure IAM policies does not allow data exfiltration"
+  #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
+  #checkov:skip=CKV_AWS_109: "Ensure IAM policies does not allow permissions management / resource exposure without constraints"
+  #checkov:skip=CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+    }
+
+    actions = [
+      "s3:*",
+      "kms:GenerateDataKey*"
+    ]
+
+    resources = [
+      "*"
+    ]
+
+  }
+
+
 }
