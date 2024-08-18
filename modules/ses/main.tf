@@ -158,7 +158,7 @@ module "lambda" {
   function_name         = "email-extract"
   function_file         = "${path.root}/lambda/extract-mail.py"
   function_runtime      = "python3.12"
-  function_handler      = "extract-mail.lambder_handler"
+  function_handler      = "extract-mail.lambda_handler"
   function_policy_json  = data.aws_iam_policy_document.lambda_policy.json
   function_exec_service = "ses.amazonaws.com"
   function_exec_arn     = "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
