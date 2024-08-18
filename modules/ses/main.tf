@@ -46,10 +46,11 @@ module "s3" {
   project            = "potteringabout"
   environment        = var.environment
   bucket_name        = "remarkable"
-  bucket_policy_json = data.aws_iam_policy_document.policy.json
+  bucket_policy_json = data.aws_iam_policy_document.s3_policy.json
+  kms_policy_json    = data.aws_iam_policy_document.kms_policy.json
 }
 
-data "aws_iam_policy_document" "policy" {
+data "aws_iam_policy_document" "s3_policy" {
   statement {
     principals {
       type        = "Service"
@@ -73,13 +74,48 @@ data "aws_iam_policy_document" "policy" {
       ]
     }
 
-    /*condition {
+    condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
 
       values = [
         "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
       ]
-    }*/
+    }
+  }
+}
+
+data "aws_iam_policy_document" "kms_policy" {
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["ses.amazonaws.com"]
+    }
+
+    actions = [
+      "kms:GenerateDataKey*",
+    ]
+
+    resources = [
+      "*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceAccount"
+
+      values = [
+        data.aws_caller_identity.current.account_id
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
+      ]
+    }
   }
 }

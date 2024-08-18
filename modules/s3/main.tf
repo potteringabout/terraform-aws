@@ -28,24 +28,12 @@ resource "aws_kms_key" "this" {
   description             = "This key is used to encrypt ${var.project}-${var.environment}-${var.bucket_name} bucket objects"
   deletion_window_in_days = 10
 }
-/*
-{
-  "Sid": "AllowSESToEncryptMessagesBelongingToThisAccount",
-  "Effect": "Allow",
-  "Principal": {
-    "Service":"ses.amazonaws.com"
-  },
-  "Action": [
-    "kms:GenerateDataKey*"
-  ],
-  "Resource": "*",
-  "Condition":{
-        "StringEquals":{
-          "AWS:SourceAccount":"111122223333",
-          "AWS:SourceArn": "arn:aws:ses:region:111122223333:receipt-rule-set/rule_set_name:receipt-rule/receipt_rule_name"
-        }
-      }
-}*/
+
+resource "aws_kms_key_policy" "this" {
+  key_id = aws_kms_key.this.id
+  policy = var.kms_policy_json
+
+}
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id

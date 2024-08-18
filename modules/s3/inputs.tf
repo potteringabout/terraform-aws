@@ -13,3 +13,7 @@ variable "bucket_name" {
 variable "bucket_policy_json" {
   type = string
 }
+
+variable "kms_policy_json" {
+  type = string
+}
