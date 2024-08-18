@@ -20,7 +20,7 @@ resource "aws_ses_receipt_rule_set" "this" {
   rule_set_name = "remarkable-rules"
 }
 
-resource "aws_ses_receipt_rule" "store" {
+/*resource "aws_ses_receipt_rule" "store" {
   name          = "store"
   rule_set_name = aws_ses_receipt_rule_set.this.rule_set_name
   recipients    = ["remarkable@${var.domain}"]
@@ -39,7 +39,7 @@ resource "aws_ses_receipt_rule" "store" {
     kms_key_arn       = module.s3.bucket_key
     position          = 2
   }
-}
+}*/
 
 module "s3" {
   source             = "../s3"
