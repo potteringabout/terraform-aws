@@ -86,6 +86,28 @@ data "aws_iam_policy_document" "s3_policy" {
 }
 
 data "aws_iam_policy_document" "kms_policy" {
+
+  #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
+  #checkov:skip=CKV_AWS_109: "Ensure IAM policies does not allow permissions management / resource exposure without constraints"
+  #checkov:skip=CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
+
+
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+    }
+
+    actions = [
+      "kms:*",
+    ]
+
+    resources = [
+      "*"
+    ]
+
+  }
+
   statement {
     principals {
       type        = "Service"
