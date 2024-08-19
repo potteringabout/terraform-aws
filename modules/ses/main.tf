@@ -95,6 +95,21 @@ data "aws_iam_policy_document" "s3_policy" {
       ]
     }
   }
+
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["ses.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetObject",
+    ]
+
+    resources = [
+      "${module.s3.bucket_arn}/*"
+    ]
+  }
 }
 
 data "aws_iam_policy_document" "kms_policy" {
@@ -175,7 +190,8 @@ data "aws_iam_policy_document" "lambda_policy" {
 
     actions = [
       "s3:*",
-      "kms:GenerateDataKey*"
+      "kms:GenerateDataKey*",
+      "kms:Decrypt"
     ]
 
     resources = [

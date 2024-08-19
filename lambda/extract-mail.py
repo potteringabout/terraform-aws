@@ -2,16 +2,17 @@ import email
 import boto3
 import json
 
-read_bucket = 'incoming-email' # name of the bucket where the emails are saved
+read_bucket = 'potteringabout-uk-dev-remarkable' # name of the bucket where the emails are saved
 s3 = boto3.resource('s3')
-write_bucket = 'attachment buckets'  # name of the bucket where the attachments are to be saved
+#write_bucket = 'attachment buckets'  # name of the bucket where the attachments are to be saved
 
 def lambda_handler(event, context):
     messageID = event['Records'][0]['ses']['mail']['messageId']
 
     # get the email from s3
-    key = f'incoming/{messageID}'
+    key = f'/in/{messageID}'
     read_obj = s3.Object(read_bucket, key)
+    print(read_obj)
     body = read_obj.get()['Body'].read().decode('utf8')
 
     # get attachments from email body
@@ -23,10 +24,10 @@ def lambda_handler(event, context):
         name = attachment.get_filename()
         data = attachment.get_payload(decode=True)
         key = f'{name}'
-        s3.Bucket(write_bucket).put_object(Key=key, Body=data)
+        #s3.Bucket(write_bucket).put_object(Key=key, Body=data)
 
     # delete the email from s3 (optional)
-    read_obj.delete()
+    #read_obj.delete()
     return {
         'statusCode': 200,
         'body': json.dumps('Email Processed Successfully')
