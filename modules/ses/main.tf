@@ -214,7 +214,7 @@ module "lambda2" {
   function_exec_allowname = "AllowFromS3"
 
   s3_object_trigger = {
-    bucket        = module.s3.bucket.id
+    bucket        = module.s3.bucket_id
     events        = ["s3:ObjectCreated:*"]
     filter_prefix = "/out/"
     filter_suffix = null
