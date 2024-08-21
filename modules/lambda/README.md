@@ -42,6 +42,7 @@ No modules.
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | n/a | `string` | n/a | yes |
 | <a name="input_function_policy_json"></a> [function\_policy\_json](#input\_function\_policy\_json) | n/a | `string` | n/a | yes |
 | <a name="input_function_runtime"></a> [function\_runtime](#input\_function\_runtime) | n/a | `string` | n/a | yes |
+| <a name="input_funtion_timeout"></a> [funtion\_timeout](#input\_funtion\_timeout) | n/a | `number` | `10` | no |
 
 ## Outputs
 

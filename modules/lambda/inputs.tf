@@ -33,3 +33,8 @@ variable "function_exec_arn" {
 variable "function_exec_service" {
   type = string
 }
+
+variable "funtion_timeout" {
+  type    = number
+  default = 10
+}

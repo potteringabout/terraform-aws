@@ -73,8 +73,10 @@ def lambda_handler(event, context):
   print("From:", From)
   # if the email message is multipart
   if msg.is_multipart():
+    print("Multipart")
     # iterate over email parts
     for part in msg.walk():
+      print("walking")
       # extract content type of email
       content_type = part.get_content_type()
       content_disposition = str(part.get("Content-Disposition"))
@@ -87,12 +89,15 @@ def lambda_handler(event, context):
         # print text/plain emails and skip attachments
         print(body)
       elif "attachment" in content_disposition:
+        print("attachment")
         # download attachment
         filename = part.get_filename()
+        print(f"fn:{filename}")
         if filename:
           filepath = tempfile.gettempdir() + "/" + filename
           # download attachment and save it
           open(filepath, "wb").write(part.get_payload(decode=True))
+          print("written file")
           upload_file(filepath, bucket, object_name=f'/out/{messageID}')
 
     return {
