@@ -33,7 +33,7 @@ resource "aws_iam_role_policy" "this" {
 data "archive_file" "lambda" {
   type        = "zip"
   source_dir  = var.function_dir
-  output_path = "/tmp/lambda_function.zip"
+  output_path = "/tmp/${var.function_name}.zip"
 }
 
 resource "aws_lambda_function" "this" {
@@ -44,7 +44,7 @@ resource "aws_lambda_function" "this" {
   #checkov:skip=CKV_AWS_116: "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)"
   #checkov:skip=CKV_AWS_272: "Ensure AWS Lambda function is configured to validate code-signing"
 
-  filename      = "/tmp/lambda_function.zip"
+  filename      = "/tmp/${var.function_name}.zip"
   function_name = var.function_name
   role          = aws_iam_role.this.arn
   handler       = var.function_handler
