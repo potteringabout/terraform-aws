@@ -14,7 +14,7 @@ variable "function_handler" {
   type = string
 }
 
-variable "function_file" {
+variable "function_dir" {
   type = string
 }
 

@@ -32,7 +32,7 @@ resource "aws_iam_role_policy" "this" {
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = var.function_file
+  source_dir  = var.function_dir
   output_path = "/tmp/lambda_function.zip"
 }
 

@@ -35,9 +35,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_function_dir"></a> [function\_dir](#input\_function\_dir) | n/a | `string` | n/a | yes |
 | <a name="input_function_exec_arn"></a> [function\_exec\_arn](#input\_function\_exec\_arn) | n/a | `string` | n/a | yes |
 | <a name="input_function_exec_service"></a> [function\_exec\_service](#input\_function\_exec\_service) | n/a | `string` | n/a | yes |
-| <a name="input_function_file"></a> [function\_file](#input\_function\_file) | n/a | `string` | n/a | yes |
 | <a name="input_function_handler"></a> [function\_handler](#input\_function\_handler) | n/a | `string` | n/a | yes |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | n/a | `string` | n/a | yes |
 | <a name="input_function_policy_json"></a> [function\_policy\_json](#input\_function\_policy\_json) | n/a | `string` | n/a | yes |

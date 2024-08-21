@@ -171,7 +171,7 @@ data "aws_iam_policy_document" "kms_policy" {
 module "lambda" {
   source                = "../lambda"
   function_name         = "email-extract"
-  function_file         = "${path.root}/lambda/extract-mail.py"
+  function_dir          = "${path.root}/lambda/extract-mail"
   function_runtime      = "python3.12"
   function_handler      = "extract-mail.lambda_handler"
   function_policy_json  = data.aws_iam_policy_document.lambda_policy.json
