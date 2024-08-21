@@ -75,7 +75,7 @@ resource "aws_s3_bucket_notification" "aws-lambda-trigger" {
   lambda_function {
     lambda_function_arn = aws_lambda_function.this.arn
     events              = var.s3_object_trigger["events"]
-    filter_prefix       = var.s3_object_trigger["filter_prefix"] ? var.s3_object_trigger["filter_prefix"] : null
-    filter_suffix       = var.s3_object_trigger["filter_prefix"] ? var.s3_object_trigger["filter_suffix"] : null
+    filter_prefix       = var.s3_object_trigger["filter_prefix"]
+    filter_suffix       = var.s3_object_trigger["filter_suffix"]
   }
 }
