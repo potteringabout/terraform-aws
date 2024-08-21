@@ -14,6 +14,10 @@ variable "function_handler" {
   type = string
 }
 
+variable "function_role" {
+  type = string
+}
+
 variable "function_dir" {
   type = string
 }

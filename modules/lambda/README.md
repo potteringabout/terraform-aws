@@ -43,6 +43,7 @@ No modules.
 | <a name="input_function_handler"></a> [function\_handler](#input\_function\_handler) | n/a | `string` | n/a | yes |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | n/a | `string` | n/a | yes |
 | <a name="input_function_policy_json"></a> [function\_policy\_json](#input\_function\_policy\_json) | n/a | `string` | n/a | yes |
+| <a name="input_function_role"></a> [function\_role](#input\_function\_role) | n/a | `string` | n/a | yes |
 | <a name="input_function_runtime"></a> [function\_runtime](#input\_function\_runtime) | n/a | `string` | n/a | yes |
 | <a name="input_funtion_timeout"></a> [funtion\_timeout](#input\_funtion\_timeout) | n/a | `number` | `10` | no |
 | <a name="input_s3_object_trigger"></a> [s3\_object\_trigger](#input\_s3\_object\_trigger) | n/a | <pre>object({<br>    bucket        = string<br>    events        = list(string)<br>    filter_prefix = string<br>    filter_suffix = string<br>  })</pre> | <pre>{<br>  "bucket": null,<br>  "events": [],<br>  "filter_prefix": null,<br>  "filter_suffix": null<br>}</pre> | no |

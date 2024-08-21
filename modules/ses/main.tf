@@ -174,6 +174,7 @@ module "lambda" {
   function_dir            = "${path.root}/lambda/extract-mail"
   function_runtime        = "python3.12"
   function_handler        = "extract-mail.lambda_handler"
+  function_role           = "email-extract"
   function_policy_json    = data.aws_iam_policy_document.lambda_policy.json
   function_exec_service   = "ses.amazonaws.com"
   function_exec_arn       = "arn:aws:ses:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:receipt-rule-set/remarkable-rules:receipt-rule/store"
@@ -208,6 +209,7 @@ module "lambda2" {
   function_dir            = "${path.root}/lambda/textract"
   function_runtime        = "python3.12"
   function_handler        = "textract.lambda_handler"
+  function_role           = "textract"
   function_policy_json    = data.aws_iam_policy_document.lambda2_policy.json
   function_exec_service   = "s3.amazonaws.com"
   function_exec_arn       = "arn:aws:s3:::${module.s3.bucket}"
