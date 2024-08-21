@@ -99,11 +99,7 @@ def lambda_handler(event, context):
         # download attachment
         filename = part.get_filename()
         if filename:
-          folder_name = clean(subject)
-          if not os.path.isdir(folder_name):
-            # make a folder for this email (named after the subject)
-            os.mkdir(folder_name)
-          filepath = os.path.join(folder_name, filename)
+          filepath = tempfile.gettempdir() + "/" + filename
           # download attachment and save it
           open(filepath, "wb").write(part.get_payload(decode=True))
           upload_file(filepath, read_bucket, object_name=f'/out/{messageID}')
