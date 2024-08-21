@@ -233,7 +233,8 @@ data "aws_iam_policy_document" "lambda2_policy" {
     actions = [
       "s3:*",
       "kms:GenerateDataKey*",
-      "kms:Decrypt"
+      "kms:Decrypt",
+      "textract:*"
     ]
 
     resources = [
