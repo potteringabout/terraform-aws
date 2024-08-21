@@ -57,5 +57,4 @@ variable "s3_object_trigger" {
     filter_prefix = null
     filter_suffix = null
   }
-
 }

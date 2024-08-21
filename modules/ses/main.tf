@@ -212,6 +212,13 @@ module "lambda2" {
   function_exec_service   = "s3.amazonaws.com"
   function_exec_arn       = "arn:aws:s3:::${module.s3.bucket}"
   function_exec_allowname = "AllowFromS3"
+
+  s3_object_trigger = {
+    bucket        = module.s3.bucket.id
+    events        = ["s3:ObjectCreated:*"]
+    filter_prefix = "/out/"
+    filter_suffix = null
+  }
 }
 
 data "aws_iam_policy_document" "lambda2_policy" {
