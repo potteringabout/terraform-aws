@@ -32,7 +32,7 @@ s3 = boto3.client('s3', region_name="eu-west-2")
 
 location_info = s3.get_bucket_location(Bucket=bucket_name)
 bucket_region = location_info['LocationConstraint']
-key_name="/in/13p36bpke346s6qllqsn5f48h9lscbkui8lah5g1"
+key_name="/in/lhfrr8396tfe7v6qiajmvshfpcl8epnoeplehlg1"
 object_info = s3.head_object(Bucket=bucket_name, Key=key_name)
 metadata = object_info['Metadata']
 material_json = object_info['Metadata']['x-amz-matdesc']

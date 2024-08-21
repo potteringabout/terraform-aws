@@ -34,7 +34,28 @@ variable "function_exec_service" {
   type = string
 }
 
+variable "function_exec_allowname" {
+  type = string
+}
+
 variable "funtion_timeout" {
   type    = number
   default = 10
+}
+
+variable "s3_object_trigger" {
+  type = object({
+    bucket        = string
+    events        = list(string)
+    filter_prefix = string
+    filter_suffix = string
+  })
+
+  default = {
+    bucket        = null
+    events        = []
+    filter_prefix = null
+    filter_suffix = null
+  }
+
 }

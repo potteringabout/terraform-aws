@@ -62,9 +62,20 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_lambda_permission" "this" {
-  statement_id  = "AllowExecutionFromSES"
+  statement_id  = var.function_exec_allowname
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.this.function_name
   principal     = var.function_exec_service
   source_arn    = var.function_exec_arn
+}
+
+resource "aws_s3_bucket_notification" "aws-lambda-trigger" {
+  count  = var.s3_object_trigger["bucket"] != null ? 1 : 0
+  bucket = var.s3_object_trigger["bucket"]
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.this.arn
+    events              = var.s3_object_trigger["events"]
+    filter_prefix       = var.s3_object_trigger["filter_prefix"] ? var.s3_object_trigger["filter_prefix"] : null
+    filter_suffix       = var.s3_object_trigger["filter_prefix"] ? var.s3_object_trigger["filter_suffix"] : null
+  }
 }

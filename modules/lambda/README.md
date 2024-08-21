@@ -28,6 +28,7 @@ No modules.
 | [aws_iam_role_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_lambda_function.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function) | resource |
 | [aws_lambda_permission.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) | resource |
+| [aws_s3_bucket_notification.aws-lambda-trigger](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_notification) | resource |
 | [archive_file.lambda](https://registry.terraform.io/providers/hashicorp/archive/2.5.0/docs/data-sources/file) | data source |
 | [aws_iam_policy_document.assume_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
@@ -36,6 +37,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_function_dir"></a> [function\_dir](#input\_function\_dir) | n/a | `string` | n/a | yes |
+| <a name="input_function_exec_allowname"></a> [function\_exec\_allowname](#input\_function\_exec\_allowname) | n/a | `string` | n/a | yes |
 | <a name="input_function_exec_arn"></a> [function\_exec\_arn](#input\_function\_exec\_arn) | n/a | `string` | n/a | yes |
 | <a name="input_function_exec_service"></a> [function\_exec\_service](#input\_function\_exec\_service) | n/a | `string` | n/a | yes |
 | <a name="input_function_handler"></a> [function\_handler](#input\_function\_handler) | n/a | `string` | n/a | yes |
@@ -43,6 +45,7 @@ No modules.
 | <a name="input_function_policy_json"></a> [function\_policy\_json](#input\_function\_policy\_json) | n/a | `string` | n/a | yes |
 | <a name="input_function_runtime"></a> [function\_runtime](#input\_function\_runtime) | n/a | `string` | n/a | yes |
 | <a name="input_funtion_timeout"></a> [funtion\_timeout](#input\_funtion\_timeout) | n/a | `number` | `10` | no |
+| <a name="input_s3_object_trigger"></a> [s3\_object\_trigger](#input\_s3\_object\_trigger) | n/a | <pre>object({<br>    bucket        = string<br>    events        = list(string)<br>    filter_prefix = string<br>    filter_suffix = string<br>  })</pre> | <pre>{<br>  "bucket": null,<br>  "events": [],<br>  "filter_prefix": null,<br>  "filter_suffix": null<br>}</pre> | no |
 
 ## Outputs
 
