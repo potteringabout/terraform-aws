@@ -94,11 +94,11 @@ def lambda_handler(event, context):
         filename = part.get_filename()
         print(f"fn:{filename}")
         if filename:
-          filepath = tempfile.gettempdir() + "/" + filename
+          filepath = tempfile.gettempdir() + "/" + filename + ".png"
           # download attachment and save it
           open(filepath, "wb").write(part.get_payload(decode=True))
           print("written file")
-          upload_file(filepath, bucket, object_name=f'/out/{messageID}')
+          upload_file(filepath, bucket, object_name=f'/out/{messageID}.png')
 
     return {
       'statusCode': 200,

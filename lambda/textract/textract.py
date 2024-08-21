@@ -27,10 +27,22 @@ def lambda_handler(event, context):
           FeatureTypes=[ 'TABLES','FORMS','LAYOUT']
       )
 
+      blocks = response['Blocks']
+      text = ""
+      for block in blocks:
+        if block['BlockType'] == 'WORD':
+          text += block['Text']
+        # text formation based upon Line block type
+        # elif (block['BlockType'] == 'LINE':
+        #     text += block['Text']
+      print(text)
+
       for b in response["Blocks"]:
-        print(f"BlockType {b["BlockType"]} Confidence {b["Confidence"]} TextType {b["TextType"]}  Text {b["Text"]}")
+        print(b)
+        #print(f"BlockType {b["BlockType"]} TextType {b["TextType"]}  Text {b["Text"]}")
 
       return_result = {"Status": "Success"}
       return return_result
+
     except Exception as error:
       return {"Status": "Failed", "Reason": json.dumps(error, default=str)}
