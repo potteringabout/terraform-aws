@@ -9,6 +9,7 @@ import random
 import string
 import tempfile
 from botocore.exceptions import ClientError
+import filetype
 
 bucket = 'potteringabout-uk-dev-remarkable'
 
@@ -94,11 +95,26 @@ def lambda_handler(event, context):
         filename = part.get_filename()
         print(f"fn:{filename}")
         if filename:
-          filepath = tempfile.gettempdir() + "/" + filename + ".png"
+          filepath = tempfile.gettempdir() + "/" + filename
           # download attachment and save it
           open(filepath, "wb").write(part.get_payload(decode=True))
+
+          kind = filetype.guess(filepath)
+          if kind is None:
+            raise Exception('Cannot guess file type!')
+          print(kind.mime)
+
+          ext = None
+          match kind.mime:
+            case "application/pdf":
+              ext = "pdf"
+            case "image/png":
+              ext = "png"
+            case _:
+              raise Exception(f"File mime type {kind.mime} unsupported")
+
           print("written file")
-          upload_file(filepath, bucket, object_name=f'/out/{messageID}.png')
+          upload_file(filepath, bucket, object_name=f'/out/{messageID}.{ext}')
 
     return {
       'statusCode': 200,
