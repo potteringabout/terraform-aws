@@ -1,4 +1,4 @@
-/*locals {
+locals {
   container_definitions = [
     {
       name                   = var.squid_service_name
@@ -37,10 +37,10 @@
 
   }
 
-}*/
+}
 
 module "network" {
-  source  = "./modules/vpc"
+  source  = "../../modules/vpc"
   egress  = false
   ingress = true
   region  = var.aws_region
@@ -48,22 +48,9 @@ module "network" {
 
 }
 
-/*module "s3" {
-  source      = "./modules/s3"
-  project     = var.project
-  environment = var.environment
-  bucket_name = "remarkable"
-}*/
 
-
-module "ses" {
-  source      = "./modules/ses"
-  domain      = "dev.potteringabout.net"
-  environment = var.environment
-}
-
-/*module "squid_ecr" {
-  source   = "./modules/ecr"
+module "squid_ecr" {
+  source   = "../../modules/ecr"
   ecr_name = "squid"
   kms_key  = aws_kms_key.key.arn
   providers = {
@@ -78,9 +65,9 @@ resource "aws_kms_key" "key" {
   deletion_window_in_days = 10
   enable_key_rotation     = true
   provider                = aws.deployment
-}*/
+}
 
-/*
+
 data "aws_iam_policy_document" "ecs_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -90,9 +77,9 @@ data "aws_iam_policy_document" "ecs_assume_role_policy" {
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
-}*/
+}
 
-/*
+
 resource "aws_iam_role" "squid_execution" {
   name               = "squid-execution-role"
   path               = "/"
@@ -126,16 +113,16 @@ resource "aws_iam_role" "squid_task" {
 }
 
 module "squid_task" {
-  source                = "./modules/ecs-task"
+  source                = "../../modules/ecs-task"
   task_family           = "squid"
   task_role_arn         = aws_iam_role.squid_task.arn
   execution_role_arn    = aws_iam_role.squid_execution.arn
   container_definitions = local.container_definitions
-  /*providers = {
+  providers = {
     aws = aws.deployment
   }
-}*/
-/*
+}
+
 resource "aws_kms_key" "ecs_key" {
   description             = "ECS Key"
   deletion_window_in_days = 10
@@ -176,34 +163,33 @@ resource "aws_kms_key_policy" "ecs_key_policy" {
     ]
     Version = "2012-10-17"
   })
-}*/
-/*
+}
+
 module "squid_cluster" {
-  source                               = "./modules/ecs-cluster"
+  source                               = "../../modules/ecs-cluster"
   cluster_name                         = "proxy-services"
   cluster_log_group_name               = "/proxy-services"
   cluster_execution_encryption_key_arn = aws_kms_key.ecs_key.arn
-  /*providers = {
+  providers = {
     aws = aws.deployment
   }
-}*/
+}
 
-/*module "squid_lb" {
-  source     = "./modules/alb"
-  vpc_id     = module.network.vpc_id
-  subnet_ids = module.network.access_subnet_ids
-  lb        = local.lb
+module "squid_lb" {
+  source      = "../../modules/alb"
+  vpc_id      = module.network.vpc_id
+  subnet_ids  = module.network.access_subnet_ids
+  lb          = local.lb
   ingress_ips = split(",", var.ingress_ips)
 
   target_group = {
     name = "squid"
     port = 3128
   }
-}*/
+}
 
-/*
 module "squid_lb" {
-  source      = "./modules/nlb"
+  source      = "../../modules/nlb"
   vpc_id      = module.network.vpc_id
   subnet_ids  = module.network.access_subnet_ids
   lb          = local.lb
@@ -212,14 +198,14 @@ module "squid_lb" {
     name = "squid"
     port = 3128
   }
-  /*providers = {
+  providers = {
     aws = aws.deployment
   }
-}*/
+}
 
-/*
+
 module "squid_service" {
-  source           = "./modules/ecs-service"
+  source           = "../../modules/ecs-service"
   ecs_service_name = "squid"
   vpc_id           = module.network.vpc_id
   ecs_cluster_id   = module.squid_cluster.cluster_arn
@@ -232,25 +218,24 @@ module "squid_service" {
     security_group_id = module.squid_lb.security_group_id
 
   }
-  /*providers = {
+  providers = {
     aws = aws.deployment
-  }*
-}*/
-/*
+  }
+}
+
 module "proxy_address" {
-  source  = "./modules/route53"
+  source  = "../../modules/route53"
   name    = "${var.environment}proxy"
   zone    = var.zone
   address = module.squid_lb.lb_address
 
-  /*providers = {
+  providers = {
     aws = aws.dns
   }
-}*/
-/*
+}
+
 module "reminder" {
-  source     = "./modules/sns"
+  source     = "../../modules/sns"
   name       = "${var.environment}proxy"
   sms_number = var.sms_number
 }
-*/

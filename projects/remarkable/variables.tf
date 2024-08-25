@@ -87,39 +87,6 @@ variable "project_full" {
   type        = string
 }
 
-/*
-variable "squid_container_image" {
-  type        = string
-  description = "The Squid container to use"
-}
-
-variable "squid_service_name" {
-  type        = string
-  description = "The Squid service name"
-}
-
-variable "ingress" {
-  type    = bool
-  default = true
-}
-
-variable "egress" {
-  type    = bool
-  default = true
-}
-
-variable "ingress_ips" {
-  type    = string
-  default = "0.0.0.0/32"
-}
-
-variable "zone" {
-  type = string
-}
-
-variable "sms_number" {
-  type = string
-}*/
 
 variable "vpc" {
   type = object(
