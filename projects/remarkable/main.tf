@@ -204,6 +204,7 @@ module "lambda2" {
   function_exec_service   = "s3.amazonaws.com"
   function_exec_arn       = "arn:aws:s3:::${module.s3.bucket}"
   function_exec_allowname = "AllowFromS3"
+  function_trigger        = "s3"
 
   s3_object_trigger = {
     bucket        = module.s3.bucket_id

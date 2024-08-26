@@ -47,6 +47,11 @@ variable "funtion_timeout" {
   default = 10
 }
 
+variable "function_trigger" {
+  type    = string
+  default = null
+}
+
 variable "s3_object_trigger" {
   type = object({
     bucket        = string
