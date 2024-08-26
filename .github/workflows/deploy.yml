@@ -7,6 +7,10 @@ on:
         description: "Environment where terraform workflows will be deployed to"
         required: true
         type: environment
+      PROJECT:
+        description: "Project (under the projects directory) on which to perform terraform plan"
+        required: true
+        type: string
       ROLE_DURATION_SECONDS:
         description: "Role duration"
         required: false
@@ -54,6 +58,7 @@ jobs:
           TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
           IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
+          PROJECT: ${{ inputs.PROJECT }}
     outputs:
       changes_present: ${{ steps.plan.outputs.PLAN_RESULT }}
 
@@ -91,3 +96,4 @@ jobs:
           TF_VERSION: ${{ vars.TF_VERSION }}
           IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
           INGRESS_IPS: ${{ inputs.INGRESS_IPS }}
+          PROJECT: ${{ inputs.PROJECT }}
