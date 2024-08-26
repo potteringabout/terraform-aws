@@ -8,7 +8,7 @@ on:
         required: true
         type: environment
       PROJECT:
-        description: "Environment to perform terraform plan"
+        description: "Project (under the projects directory) on which to perform terraform plan"
         required: true
         type: string
       ROLE_DURATION_SECONDS:
