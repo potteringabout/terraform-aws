@@ -142,3 +142,8 @@ variable "vpc" {
   }
 
 }
+
+variable "domain" {
+  type    = string
+  default = "dev.potteringabout.net"
+}
