@@ -161,7 +161,7 @@ data "aws_iam_policy_document" "kms_policy" {
 module "lambda" {
   source                  = "../../modules/lambda"
   function_name           = "email-extract"
-  function_dir            = "${path.root}/lambda/extract-mail"
+  function_dir            = "../../lambda/extract-mail"
   function_runtime        = "python3.12"
   function_handler        = "extract-mail.lambda_handler"
   function_role           = "email-extract"
@@ -196,7 +196,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 module "lambda2" {
   source                  = "../../modules/lambda"
   function_name           = "textract"
-  function_dir            = "${path.root}/lambda/textract"
+  function_dir            = "../../lambda/textract"
   function_runtime        = "python3.12"
   function_handler        = "textract.lambda_handler"
   function_role           = "textract"
