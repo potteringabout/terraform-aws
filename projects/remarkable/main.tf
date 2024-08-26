@@ -8,10 +8,9 @@ module "network" {
 }
 
 module "ses" {
-  source      = "../../modules/ses"
-  domain      = var.domain
-  inbound     = true
-  environment = var.environment
+  source  = "../../modules/ses"
+  domain  = var.domain
+  inbound = true
 }
 
 
