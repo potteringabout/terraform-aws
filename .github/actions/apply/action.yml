@@ -84,5 +84,5 @@ runs:
     - name: Terraform Apply
       id: apply
       working-directory: ./projects/${{ inputs.PROJECT }}
-      run: terraform apply -var-file="./variables/input.tfvars.json" -var "deployment_repo=${{ github.repositoryUrl }}"  -auto-approve
+      run: terraform apply -var-file="../../variables/input.tfvars.json" -var "deployment_repo=${{ github.repositoryUrl }}"  -auto-approve
       shell: bash
