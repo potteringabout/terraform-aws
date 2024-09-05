@@ -31,7 +31,7 @@ inputs:
     description: ingress ips
     required: true
   PROJECT:
-    description: ingress ips
+    description: project
     required: true
 
 outputs:

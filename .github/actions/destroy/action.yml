@@ -27,7 +27,7 @@ inputs:
     description: "Role for Aws"
     required: true
   PROJECT:
-    description: ingress ips
+    description: project
     required: true
 
 
