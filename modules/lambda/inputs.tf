@@ -47,6 +47,11 @@ variable "funtion_timeout" {
   default = 10
 }
 
+variable "function_trigger" {
+  type    = string
+  default = null
+}
+
 variable "s3_object_trigger" {
   type = object({
     bucket        = string
@@ -56,7 +61,7 @@ variable "s3_object_trigger" {
   })
 
   default = {
-    bucket        = null
+    bucket        = ""
     events        = []
     filter_prefix = null
     filter_suffix = null

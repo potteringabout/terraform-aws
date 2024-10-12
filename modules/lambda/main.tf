@@ -70,7 +70,7 @@ resource "aws_lambda_permission" "this" {
 }
 
 resource "aws_s3_bucket_notification" "aws-lambda-trigger" {
-  count  = var.s3_object_trigger["bucket"] != null ? 1 : 0
+  count  = var.function_trigger != "s3" ? 1 : 0
   bucket = var.s3_object_trigger["bucket"]
   lambda_function {
     lambda_function_arn = aws_lambda_function.this.arn

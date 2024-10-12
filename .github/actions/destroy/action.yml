@@ -26,6 +26,10 @@ inputs:
   IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
+  PROJECT:
+    description: project
+    required: true
+
 
 outputs:
   PLAN_RESULT:
@@ -53,6 +57,7 @@ runs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
+      working-directory: ./projects/${{ inputs.PROJECT }}
       run: |
         terraform init \
           -backend-config="region=${{ inputs.AWS_REGION }}" \
@@ -65,17 +70,20 @@ runs:
     # Validate terraform
     - name: Terraform Validate
       id: validate
+      working-directory: ./projects/${{ inputs.PROJECT }}
       run: terraform validate
       shell: bash
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: fmt
+      working-directory: ./projects/${{ inputs.PROJECT }}
       run: terraform fmt -check
       shell: bash
 
     # Plan changes to environment
     - name: Terraform Plan
       id: plan
-      run: terraform destroy -var-file="./variables/input.tfvars.json" -var "deployment_repo=${{ github.repositoryUrl }}" -no-color -auto-approve
+      working-directory: ./projects/${{ inputs.PROJECT }}
+      run: terraform destroy -var-file="../../variables/input.tfvars.json" -var "deployment_repo=${{ github.repositoryUrl }}" -no-color -auto-approve
       shell: bash
