@@ -17,20 +17,20 @@ variable "amazon_side_asn" {
 
 variable "auto_accept_shared_attachments" {
   description = "Whether to automatically accept shared attachments"
-  type        = bool
-  default     = false
+  type        = string
+  default     = "disable"
 }
 
 variable "default_route_table_association" {
   description = "Whether to automatically associate attachments with the default route table"
-  type        = bool
-  default     = true
+  type        = string
+  default     = "disable"
 }
 
 variable "default_route_table_propagation" {
   description = "Whether to automatically propagate routes to the default route table"
-  type        = bool
-  default     = false
+  type        = string
+  default     = "disable"
 }
 
 variable "description" {
