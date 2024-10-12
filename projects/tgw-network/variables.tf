@@ -5,11 +5,11 @@ variable "deployment_role_arn" {
   type        = string
 }
 
-variable "dns_role_arn" {
+/*variable "dns_role_arn" {
   description = "The ARN of role to be assumed for DNS updates"
   default     = ""
   type        = string
-}
+}*/
 
 
 variable "aws_region" {
@@ -17,9 +17,9 @@ variable "aws_region" {
   type    = string
 }
 
-variable "deploy_region" {
+/*variable "deploy_region" {
   type = string
-}
+}*/
 
 // Tags - https://allwynuk.atlassian.net/wiki/spaces/DevOps/pages/135758056/Tagging
 variable "account" {
@@ -88,44 +88,13 @@ variable "project_full" {
 }
 
 
-variable "squid_container_image" {
-  type        = string
-  description = "The Squid container to use"
-}
-
-variable "squid_service_name" {
-  type        = string
-  description = "The Squid service name"
-}
-/*
-variable "ingress" {
-  type    = bool
-  default = true
-}
-
-variable "egress" {
-  type    = bool
-  default = true
-}*/
-
-variable "ingress_ips" {
-  type    = string
-  default = "0.0.0.0/32"
-}
-
-variable "zone" {
-  type = string
-}
-
-variable "sms_number" {
-  type = string
-}
-
-variable "vpc" {
-  type = object(
+variable "vpcs" {
+  type = map(object(
     {
-      cidr = string
-      name = string
+      cidr    = string
+      name    = string
+      ingress = bool
+      egress  = bool
       subnets = map(
         list(
           object(
@@ -136,43 +105,41 @@ variable "vpc" {
         )
       )
     }
-  )
+  ))
 
   default = {
-    cidr    = "10.0.0.0/16"
-    name    = "blah"
-    ingress = true
-    egress  = false
-    subnets = {
-      access = [
-        {
-          cidr = "10.0.0.0/25"
-        },
-        {
-          cidr = "10.0.0.128/25"
-        }
-      ]
-      data = [
-        {
-          cidr = "10.0.1.0/25"
-        },
-        {
-          cidr = "10.0.1.128/25"
-        }
-      ]
-      app = [
-        {
-          cidr = "10.0.2.0/25"
-        },
-        {
-          cidr = "10.0.2.128/25"
-        }
-      ]
+    egress = {
+      cidr    = "10.0.0.0/16"
+      name    = "blah"
+      ingress = false
+      egress  = true
+      subnets = {
+        access = [
+          {
+            cidr = "10.0.0.0/25"
+          },
+          {
+            cidr = "10.0.0.128/25"
+          }
+        ]
+        data = [
+          {
+            cidr = "10.0.1.0/25"
+          },
+          {
+            cidr = "10.0.1.128/25"
+          }
+        ]
+        app = [
+          {
+            cidr = "10.0.2.0/25"
+          },
+          {
+            cidr = "10.0.2.128/25"
+          }
+        ]
+      }
     }
-
-
-
-
 
   }
 

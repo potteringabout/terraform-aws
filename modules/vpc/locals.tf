@@ -1,5 +1,8 @@
 locals {
 
+  ingress = var.vpc.ingress
+  egress  = var.vpc.egress
+
   # flatten ensures that this local value is a flat list of objects, rather
   # than a list of lists of objects.
   network_subnets = flatten([

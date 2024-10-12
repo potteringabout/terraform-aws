@@ -16,7 +16,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_network"></a> [network](#module\_network) | ../../modules/vpc | n/a |
+| <a name="module_vpcs"></a> [vpcs](#module\_vpcs) | ../../modules/vpc | n/a |
 
 ## Resources
 
@@ -39,7 +39,7 @@ No resources.
 | <a name="input_owner"></a> [owner](#input\_owner) | The individual or team owner of the asset | `string` | `"Platform Engineering"` | no |
 | <a name="input_project"></a> [project](#input\_project) | Project abbreviation in lower case | `string` | `"ss"` | no |
 | <a name="input_project_full"></a> [project\_full](#input\_project\_full) | The project name in full | `string` | `"Shared Services"` | no |
-| <a name="input_vpc"></a> [vpc](#input\_vpc) | n/a | <pre>object(<br>    {<br>      cidr = string<br>      name = string<br>      subnets = map(<br>        list(<br>          object(<br>            {<br>              cidr = string<br>            }<br>          )<br>        )<br>      )<br>    }<br>  )</pre> | <pre>{<br>  "cidr": "10.0.0.0/16",<br>  "egress": false,<br>  "ingress": true,<br>  "name": "blah",<br>  "subnets": {<br>    "access": [<br>      {<br>        "cidr": "10.0.0.0/25"<br>      },<br>      {<br>        "cidr": "10.0.0.128/25"<br>      }<br>    ],<br>    "app": [<br>      {<br>        "cidr": "10.0.2.0/25"<br>      },<br>      {<br>        "cidr": "10.0.2.128/25"<br>      }<br>    ],<br>    "data": [<br>      {<br>        "cidr": "10.0.1.0/25"<br>      },<br>      {<br>        "cidr": "10.0.1.128/25"<br>      }<br>    ]<br>  }<br>}</pre> | no |
+| <a name="input_vpcs"></a> [vpcs](#input\_vpcs) | n/a | <pre>map(object(<br>    {<br>      cidr    = string<br>      name    = string<br>      ingress = bool<br>      egress  = bool<br>      subnets = map(<br>        list(<br>          object(<br>            {<br>              cidr = string<br>            }<br>          )<br>        )<br>      )<br>    }<br>  ))</pre> | <pre>{<br>  "egress": {<br>    "cidr": "10.0.0.0/16",<br>    "egress": true,<br>    "ingress": false,<br>    "name": "blah",<br>    "subnets": {<br>      "access": [<br>        {<br>          "cidr": "10.0.0.0/25"<br>        },<br>        {<br>          "cidr": "10.0.0.128/25"<br>        }<br>      ],<br>      "app": [<br>        {<br>          "cidr": "10.0.2.0/25"<br>        },<br>        {<br>          "cidr": "10.0.2.128/25"<br>        }<br>      ],<br>      "data": [<br>        {<br>          "cidr": "10.0.1.0/25"<br>        },<br>        {<br>          "cidr": "10.0.1.128/25"<br>        }<br>      ]<br>    }<br>  }<br>}</pre> | no |
 
 ## Outputs
 

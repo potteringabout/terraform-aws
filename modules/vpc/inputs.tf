@@ -6,8 +6,10 @@ variable "region" {
 variable "vpc" {
   type = object(
     {
-      cidr = string
-      name = string
+      cidr    = string
+      name    = string
+      egress  = bool
+      ingress = bool
       subnets = map(
         list(
           object(
@@ -31,14 +33,4 @@ variable "vpc" {
     ]))
     error_message = "Subnet cidr invalid" # can't use local var here either
   }
-}
-
-variable "egress" {
-  type    = bool
-  default = false
-}
-
-variable "ingress" {
-  type    = bool
-  default = false
 }
