@@ -108,9 +108,9 @@ variable "vpcs" {
   ))
 
   default = {
-    egress = {
+    app = {
       cidr    = "10.0.0.0/16"
-      name    = "blah"
+      name    = "app"
       ingress = false
       egress  = true
       subnets = {
@@ -136,6 +136,71 @@ variable "vpcs" {
           },
           {
             cidr = "10.0.2.128/25"
+          }
+        ]
+        tgw = [
+          {
+            cidr = "10.0.3.0/25"
+          },
+          {
+            cidr = "10.0.3.128/25"
+          }
+        ]
+        fw = [
+          {
+            cidr = "10.0.4.0/25"
+          },
+          {
+            cidr = "10.0.4.128/25"
+          }
+        ]
+
+      }
+    },
+    inspection = {
+      cidr    = "10.1.0.0/16"
+      name    = "inspection"
+      ingress = false
+      egress  = true
+      subnets = {
+        inspection = [
+          {
+            cidr = "10.1.0.0/25"
+          },
+          {
+            cidr = "10.1.0.128/25"
+          }
+        ]
+        tgw = [
+          {
+            cidr = "10.1.1.0/25"
+          },
+          {
+            cidr = "10.1.1.128/25"
+          }
+        ]
+      }
+    },
+    egress = {
+      cidr    = "10.2.0.0/16"
+      name    = "egress"
+      ingress = false
+      egress  = true
+      subnets = {
+        egress = [
+          {
+            cidr = "10.2.0.0/25"
+          },
+          {
+            cidr = "10.2.0.128/25"
+          }
+        ]
+        tgw = [
+          {
+            cidr = "10.2.1.0/25"
+          },
+          {
+            cidr = "10.2.1.128/25"
           }
         ]
       }
