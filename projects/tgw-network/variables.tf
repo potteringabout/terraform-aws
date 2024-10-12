@@ -111,8 +111,8 @@ variable "vpcs" {
     app = {
       cidr    = "10.0.0.0/16"
       name    = "app"
-      ingress = false
-      egress  = true
+      ingress = true
+      egress  = false
       subnets = {
         access = [
           {
@@ -161,7 +161,7 @@ variable "vpcs" {
       cidr    = "10.1.0.0/16"
       name    = "inspection"
       ingress = false
-      egress  = true
+      egress  = false
       subnets = {
         inspection = [
           {
