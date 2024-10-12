@@ -16,6 +16,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_tgw"></a> [tgw](#module\_tgw) | ../../modules/tgw | n/a |
 | <a name="module_vpcs"></a> [vpcs](#module\_vpcs) | ../../modules/vpc | n/a |
 
 ## Resources

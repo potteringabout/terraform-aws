@@ -5,3 +5,11 @@ module "vpcs" {
   region = var.aws_region
   vpc    = each.value
 }
+
+
+module "tgw" {
+  source   = "../../modules/tgw"
+  tgw_name = "tgw"
+  #region = var.aws_region
+
+}
