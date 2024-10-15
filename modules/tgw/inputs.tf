@@ -50,3 +50,8 @@ variable "vpn_ecmp_support" {
   type        = string
   default     = "enable"
 }
+
+variable "route_tables" {
+  description = "List of route tables to create and associate with the TGW"
+  type        = list(string)
+}

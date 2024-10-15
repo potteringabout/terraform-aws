@@ -8,7 +8,12 @@ output "transit_gateway_arn" {
   value       = aws_ec2_transit_gateway.this.arn
 }
 
-output "route_tables" {
+output "inbound_route_table_id" {
   description = "The ID of the inbound route table"
-  value       = { for rt in aws_ec2_transit_gateway_route_table.this : rt.tags_all["Name"] => rt }
+  value       = aws_ec2_transit_gateway_route_table.inbound.id
+}
+
+output "outbound_route_table_id" {
+  description = "The ID of the outbound route table"
+  value       = aws_ec2_transit_gateway_route_table.outbound.id
 }
