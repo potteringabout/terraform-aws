@@ -42,7 +42,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_route_tables"></a> [route\_tables](#output\_route\_tables) | The ID of the inbound route table |
+| <a name="output_route_tables"></a> [route\_tables](#output\_route\_tables) | The route tables |
 | <a name="output_transit_gateway_arn"></a> [transit\_gateway\_arn](#output\_transit\_gateway\_arn) | The ARN of the created Transit Gateway |
 | <a name="output_transit_gateway_id"></a> [transit\_gateway\_id](#output\_transit\_gateway\_id) | The ID of the created Transit Gateway |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
