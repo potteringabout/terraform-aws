@@ -32,6 +32,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The subnet ids where the TGW attachments will be created | `list(string)` | n/a | yes |
 | <a name="input_tgw_attachment_name"></a> [tgw\_attachment\_name](#input\_tgw\_attachment\_name) | Name of the attachment | `string` | n/a | yes |
+| <a name="input_tgw_id"></a> [tgw\_id](#input\_tgw\_id) | Id of the Transit Gateway | `string` | n/a | yes |
 | <a name="input_tgw_route_table_id_association"></a> [tgw\_route\_table\_id\_association](#input\_tgw\_route\_table\_id\_association) | The route tables with which to assocate the attachment | `string` | n/a | yes |
 | <a name="input_tgw_route_table_ids_propagation"></a> [tgw\_route\_table\_ids\_propagation](#input\_tgw\_route\_table\_ids\_propagation) | The route tables to which we propagate assocaited with this attachment to | `list(string)` | `[]` | no |
 | <a name="input_tgw_static_routes"></a> [tgw\_static\_routes](#input\_tgw\_static\_routes) | The list of static routes handled by this attachment. The routes will be propagated to the route tables in the tgw\_route\_table\_ids\_propagation list | `list(string)` | `[]` | no |

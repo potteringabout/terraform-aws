@@ -154,6 +154,7 @@ module "tgw_attach" {
   for_each = local.vpc_attachments
 
   source                          = "../../modules/tgw-attach"
+  tgw_id                          = module.tgw.transit_gateway_id
   tgw_attachment_name             = each.value["name"]
   vpc_id                          = each.value["vpc_id"]
   subnet_ids                      = each.value["subnets"]

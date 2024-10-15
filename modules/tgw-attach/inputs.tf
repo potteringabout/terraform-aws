@@ -1,3 +1,8 @@
+variable "tgw_id" {
+  type        = string
+  description = "Id of the Transit Gateway"
+}
+
 variable "tgw_attachment_name" {
   type        = string
   description = "Name of the attachment"
