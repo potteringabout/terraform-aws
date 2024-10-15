@@ -34,7 +34,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 
 
 resource "aws_ec2_transit_gateway_route" "static_route" {
-  for_each                       = local.static_routes
+  for_each                       = toset(local.static_routes)
   destination_cidr_block         = each.value["route"]
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
   transit_gateway_route_table_id = each.value["propagation"]
