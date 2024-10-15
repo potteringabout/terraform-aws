@@ -102,9 +102,9 @@ locals {
   vpc_attachments = {
     for vpc in module.vpcs : vpc.vpc_name => {
       vpc_id                      = vpc.vpc_id
-      name                        = vpc.tags_all["Name"]
-      tgw_route_table             = vpc.tags_all["Name"] == "inspection" ? module.tgw.route_tables["inspection"] : module.tgw.route_tables["inbound"]
-      tgw_route_table_propagation = vpc.tags_all["Name"] == "inspection" ? [] : module.tgw.route_tables["inspection"]
+      name                        = vpc.tags["Name"]
+      tgw_route_table             = vpc.tags["Name"] == "inspection" ? module.tgw.route_tables["inspection"] : module.tgw.route_tables["inbound"]
+      tgw_route_table_propagation = vpc.tags["Name"] == "inspection" ? [] : module.tgw.route_tables["inspection"]
       subnets = [
         for subnet in vpc.subnets :
         subnet["id"] if subnet["zone"] == "tgw"
