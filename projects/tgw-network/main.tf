@@ -164,5 +164,5 @@ module "tgw_attach" {
 }
 
 output "static_routes" {
-  value = module.tgw_attach[*].static_routes
+  value = { for key, mod in module.tgw_attach : key => mod.static_routes }
 }
