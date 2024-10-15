@@ -44,4 +44,5 @@ No modules.
 |------|-------------|
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | n/a |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | n/a |
+| <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
