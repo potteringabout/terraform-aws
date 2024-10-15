@@ -104,7 +104,7 @@ locals {
       vpc_id                      = vpc.vpc_id
       name                        = vpc.vpc_name
       tgw_route_table             = vpc.vpc_name == "inspection" ? module.tgw.route_tables["inspection"] : module.tgw.route_tables["inbound"]
-      tgw_route_table_propagation = vpc.vpc_name == "inspection" ? tomap({}) : module.tgw.route_tables["inspection"]
+      tgw_route_table_propagation = vpc.vpc_name == "inspection" ? null : module.tgw.route_tables["inspection"]
       subnets = [
         for subnet in vpc.subnets :
         subnet["id"] if subnet["zone"] == "tgw"
