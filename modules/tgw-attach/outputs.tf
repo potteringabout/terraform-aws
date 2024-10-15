@@ -7,8 +7,3 @@ output "transit_gateway_vpc_attachment_vpc_id" {
   description = "The ARN of the created Transit Gateway"
   value       = aws_ec2_transit_gateway_vpc_attachment.this.vpc_id
 }
-
-output "transit_gateway_vpc_attachment_subnet_ids" {
-  description = "The IDs of the transit gateway attachment subnets"
-  value       = aws_ec2_transit_gateway_vpc_attachment.this.subnet_ids
-}
