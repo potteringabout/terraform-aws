@@ -21,7 +21,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_ec2_transit_gateway_route.static_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route) | resource |
 | [aws_ec2_transit_gateway_route_table_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_association) | resource |
 | [aws_ec2_transit_gateway_route_table_propagation.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_propagation) | resource |
 | [aws_ec2_transit_gateway_vpc_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_vpc_attachment) | resource |
@@ -42,6 +41,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_static_routes"></a> [static\_routes](#output\_static\_routes) | n/a |
 | <a name="output_transit_gateway_vpc_attachment_id"></a> [transit\_gateway\_vpc\_attachment\_id](#output\_transit\_gateway\_vpc\_attachment\_id) | The ID of the Transit Gateway attachment |
 | <a name="output_transit_gateway_vpc_attachment_vpc_id"></a> [transit\_gateway\_vpc\_attachment\_vpc\_id](#output\_transit\_gateway\_vpc\_attachment\_vpc\_id) | The ARN of the created Transit Gateway |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

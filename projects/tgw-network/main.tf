@@ -162,3 +162,7 @@ module "tgw_attach" {
   tgw_route_table_ids_propagation = local.vpc_attachments[each.value]["tgw_route_table_propagation"]
   #region = var.aws_region
 }
+
+output "static_routes" {
+  value = module.tgw_attach[*].static_routes
+}

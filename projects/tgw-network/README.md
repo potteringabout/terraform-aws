@@ -45,5 +45,7 @@ No resources.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_static_routes"></a> [static\_routes](#output\_static\_routes) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -34,6 +34,11 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 }
 
 
+output "static_routes" {
+  value = local.static_routes
+
+}
+/*
 resource "aws_ec2_transit_gateway_route" "static_route" {
   for_each                       = local.static_routes
   destination_cidr_block         = each.value["route"]
@@ -41,4 +46,4 @@ resource "aws_ec2_transit_gateway_route" "static_route" {
   transit_gateway_route_table_id = each.value["propagation"]
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.this]
-}
+}*/
