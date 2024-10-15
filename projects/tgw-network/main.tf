@@ -159,6 +159,6 @@ module "tgw_attach" {
   vpc_id                          = local.vpc_attachments[each.value]["vpc_id"]
   subnet_ids                      = local.vpc_attachments[each.value]["subnets"]
   tgw_route_table_id_association  = local.vpc_attachments[each.value]["tgw_route_table"].id
-  tgw_route_table_ids_propagation = [for k, v in local.vpc_attachments[each.value]["tgw_route_table_propagation"] : v.id]
+  tgw_route_table_ids_propagation = [for k, v in local.vpc_attachments[each.value]["tgw_route_table_propagation"] : v.id if v != null]
   #region = var.aws_region
 }
