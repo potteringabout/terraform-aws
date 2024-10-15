@@ -13,7 +13,7 @@ resource "aws_ec2_transit_gateway" "this" {
 }
 
 resource "aws_ec2_transit_gateway_route_table" "this" {
-  for_each           = var.route_tables
+  for_each           = toset(var.route_tables)
   transit_gateway_id = aws_ec2_transit_gateway.this.id
 
   tags = {
