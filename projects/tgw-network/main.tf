@@ -1,3 +1,19 @@
+locals {
+  route_tables = ["inbound", "inspection"]
+  vpc_attachments = {
+    for vpc in module.vpcs : vpc.vpc_id => {
+      vpc_id                      = vpc.vpc_id
+      name                        = vpc.tags_all["Name"]
+      tgw_route_table             = vpc.tags_all["Name"] == "inspection" ? module.route_tables["inspection"] : module.route_tables["inbound"]
+      tgw_route_table_propagation = vpc.tags_all["Name"] == "inspection" ? [] : module.route_tables["inspection"]
+      subnets = [
+        for subnet in vpc.subnets :
+        subnet["id"] if subnet["zone"] == "tgw"
+      ]
+    }
+  }
+}
+
 module "vpcs" {
   source = "../../modules/vpc"
   for_each = {
@@ -109,8 +125,7 @@ module "vpcs" {
 module "tgw" {
   source       = "../../modules/tgw"
   tgw_name     = "tgw"
-  route_tables = ["inbound", "inspection"]
-  #region = var.aws_region
+  route_tables = local.route_tables
 }
 
 /*
@@ -135,8 +150,14 @@ data "aws_subnets" "inspection" {
   }
 }*/
 
-/*module "tgw_attach" {
-  source   = "../../modules/tgw-attach"
-  tgw_attachment_name = "tgw"
+module "tgw_attach" {
+  for_each = local.vpc_attachments
+
+  source                          = "../../modules/tgw-attach"
+  tgw_attachment_name             = each.value["name"]
+  vpc_id                          = each.value["vpc_id"]
+  subnet_ids                      = each.value["subnets"]
+  tgw_route_table_id_association  = each.value["tgw_route_table"]
+  tgw_route_table_ids_propagation = each.value["tgw_route_table_propagation"]
   #region = var.aws_region
-}*/
+}

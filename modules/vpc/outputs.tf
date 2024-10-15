@@ -4,6 +4,11 @@ output "vpc_id" {
 
 output "subnets" {
   value = {
-    for subnet_name, subnet in aws_subnet.subnet : subnet_name => subnet.id
+    for subnet_name, subnet in aws_subnet.subnet : subnet_name =>
+    {
+      "id"   = subnet.id
+      "zone" = subnet.tags["zone"]
+      "name" = subnet.tags["Name"]
+    }
   }
 }
