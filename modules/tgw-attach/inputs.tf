@@ -24,13 +24,13 @@ variable "tgw_route_table_id_association" {
 }
 
 variable "tgw_route_table_ids_propagation" {
-  type        = list(string)
+  type        = map(any)
   description = "The route tables to which we propagate assocaited with this attachment to"
-  default     = []
+  default     = {}
 }
 
 variable "tgw_static_routes" {
-  type        = list(string)
+  type        = map(any)
   description = "The list of static routes handled by this attachment. The routes will be propagated to the route tables in the tgw_route_table_ids_propagation list"
-  default     = []
+  default     = {}
 }
