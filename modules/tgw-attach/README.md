@@ -42,8 +42,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_inbound_route_table_id"></a> [inbound\_route\_table\_id](#output\_inbound\_route\_table\_id) | The ID of the inbound route table |
-| <a name="output_outbound_route_table_id"></a> [outbound\_route\_table\_id](#output\_outbound\_route\_table\_id) | The ID of the outbound route table |
-| <a name="output_transit_gateway_arn"></a> [transit\_gateway\_arn](#output\_transit\_gateway\_arn) | The ARN of the created Transit Gateway |
-| <a name="output_transit_gateway_id"></a> [transit\_gateway\_id](#output\_transit\_gateway\_id) | The ID of the created Transit Gateway |
+| <a name="output_transit_gateway_vpc_attachment_id"></a> [transit\_gateway\_vpc\_attachment\_id](#output\_transit\_gateway\_vpc\_attachment\_id) | The ID of the Transit Gateway attachment |
+| <a name="output_transit_gateway_vpc_attachment_subnet_ids"></a> [transit\_gateway\_vpc\_attachment\_subnet\_ids](#output\_transit\_gateway\_vpc\_attachment\_subnet\_ids) | The IDs of the transit gateway attachment subnets |
+| <a name="output_transit_gateway_vpc_attachment_vpc_id"></a> [transit\_gateway\_vpc\_attachment\_vpc\_id](#output\_transit\_gateway\_vpc\_attachment\_vpc\_id) | The ARN of the created Transit Gateway |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

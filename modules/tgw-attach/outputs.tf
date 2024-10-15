@@ -1,19 +1,14 @@
-output "transit_gateway_id" {
-  description = "The ID of the created Transit Gateway"
-  value       = aws_ec2_transit_gateway.this.id
+output "transit_gateway_vpc_attachment_id" {
+  description = "The ID of the Transit Gateway attachment"
+  value       = aws_ec2_transit_gateway_vpc_attachment.this.id
 }
 
-output "transit_gateway_arn" {
+output "transit_gateway_vpc_attachment_vpc_id" {
   description = "The ARN of the created Transit Gateway"
-  value       = aws_ec2_transit_gateway.this.arn
+  value       = aws_ec2_transit_gateway_vpc_attachment.this.vpc_id
 }
 
-output "inbound_route_table_id" {
-  description = "The ID of the inbound route table"
-  value       = aws_ec2_transit_gateway_route_table.inbound.id
-}
-
-output "outbound_route_table_id" {
-  description = "The ID of the outbound route table"
-  value       = aws_ec2_transit_gateway_route_table.outbound.id
+output "transit_gateway_vpc_attachment_subnet_ids" {
+  description = "The IDs of the transit gateway attachment subnets"
+  value       = aws_ec2_transit_gateway_vpc_attachment.this.subnet_ids
 }
