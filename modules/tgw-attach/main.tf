@@ -1,14 +1,16 @@
-locals {
-  static_routes_list = [
-    for k, prop in var.tgw_route_table_ids_propagation : {
-      for k, route in var.tgw_static_routes :
-      "${prop}-${route}" => {
-        "route"       = route
-        "propagation" = prop
-      }
-    }
-  ]
-  static_routes = { for idx, value in local.static_routes_list : idx => value }
+data "aws_ec2_transit_gateway_route_table" "association" {
+  filter {
+    name   = "tag:Name"
+    values = [var.tgw_route_table_id_association]
+  }
+}
+
+data "aws_ec2_transit_gateway_route_table" "propagation" {
+  count = var.tgw_route_table_id_propagation != null ? 1 : 0
+  filter {
+    name   = "tag:Name"
+    values = [var.tgw_route_table_id_propagation]
+  }
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
@@ -24,26 +26,21 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
 # Optional: Associate and propagate the Outbound Route Table to the TGW
 resource "aws_ec2_transit_gateway_route_table_association" "this" {
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
-  transit_gateway_route_table_id = var.tgw_route_table_id_association
+  transit_gateway_route_table_id = data.aws_ec2_transit_gateway_route_table.association.id
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
-  for_each                       = var.tgw_route_table_ids_propagation
+  count = var.tgw_route_table_id_propagation != null ? 1 : 0
+  #for_each                       = var.tgw_route_table_ids_propagation
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
-  transit_gateway_route_table_id = each.value
+  transit_gateway_route_table_id = data.aws_ec2_transit_gateway_route_table.propagation[0].id
 }
 
-
-output "static_routes" {
-  value = local.static_routes
-
-}
-/*
 resource "aws_ec2_transit_gateway_route" "static_route" {
-  for_each                       = local.static_routes
-  destination_cidr_block         = each.value["route"]
+  for_each                       = var.tgw_static_routes
+  destination_cidr_block         = each.value
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
-  transit_gateway_route_table_id = each.value["propagation"]
+  transit_gateway_route_table_id = data.aws_ec2_transit_gateway_route_table.propagation[0].id
 
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.this]
-}*/
+}

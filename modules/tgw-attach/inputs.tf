@@ -14,7 +14,7 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  type        = list(string)
+  type        = set(string)
   description = "The subnet ids where the TGW attachments will be created"
 }
 
@@ -23,14 +23,14 @@ variable "tgw_route_table_id_association" {
   description = "The route tables with which to assocate the attachment"
 }
 
-variable "tgw_route_table_ids_propagation" {
-  type        = map(any)
+variable "tgw_route_table_id_propagation" {
+  type        = string
   description = "The route tables to which we propagate assocaited with this attachment to"
-  default     = {}
+  default     = null
 }
 
 variable "tgw_static_routes" {
-  type        = map(any)
-  description = "The list of static routes handled by this attachment. The routes will be propagated to the route tables in the tgw_route_table_ids_propagation list"
-  default     = {}
+  type        = set(string)
+  description = "The map of static routes handled by this attachment. The routes will be propagated to the route tables in the tgw_route_table_ids_propagation map"
+  default     = []
 }

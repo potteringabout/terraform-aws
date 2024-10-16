@@ -103,8 +103,8 @@ locals {
     for k, vpc in module.vpcs : vpc.vpc_name => {
       vpc_id                      = vpc.vpc_id
       name                        = vpc.vpc_name
-      tgw_route_table             = vpc.vpc_name == "inspection" ? module.tgw.route_tables["inspection"].id : module.tgw.route_tables["inbound"].id
-      tgw_route_table_propagation = vpc.vpc_name == "inspection" ? {} : { "propagation" : module.tgw.route_tables["inspection"].id }
+      tgw_route_table             = vpc.vpc_name == "inspection" ? "inspection" : "inbound"
+      tgw_route_table_propagation = vpc.vpc_name != "inspection" ? "inspection" : null
       subnets = [
         for subnet in vpc.subnets :
         subnet["id"] if subnet["zone"] == "tgw"
@@ -153,16 +153,12 @@ data "aws_subnets" "inspection" {
 module "tgw_attach" {
   for_each = toset([for k, v in local.vpcs : k])
 
-  source                          = "../../modules/tgw-attach"
-  tgw_id                          = module.tgw.transit_gateway_id
-  tgw_attachment_name             = local.vpc_attachments[each.value]["name"]
-  vpc_id                          = local.vpc_attachments[each.value]["vpc_id"]
-  subnet_ids                      = local.vpc_attachments[each.value]["subnets"]
-  tgw_route_table_id_association  = local.vpc_attachments[each.value]["tgw_route_table"]
-  tgw_route_table_ids_propagation = local.vpc_attachments[each.value]["tgw_route_table_propagation"]
+  source                         = "../../modules/tgw-attach"
+  tgw_id                         = module.tgw.transit_gateway_id
+  tgw_attachment_name            = local.vpc_attachments[each.value]["name"]
+  vpc_id                         = local.vpc_attachments[each.value]["vpc_id"]
+  subnet_ids                     = local.vpc_attachments[each.value]["subnets"]
+  tgw_route_table_id_association = local.vpc_attachments[each.value]["tgw_route_table"]
+  tgw_route_table_id_propagation = local.vpc_attachments[each.value]["tgw_route_table_propagation"]
   #region = var.aws_region
-}
-
-output "static_routes" {
-  value = { for key, mod in module.tgw_attach : key => mod.static_routes }
 }
