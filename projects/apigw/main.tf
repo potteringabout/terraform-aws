@@ -21,7 +21,7 @@ resource "aws_cognito_user_pool_client" "client_all_resources" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes                 = [aws_cognito_resource_server.this.identifier + "/resource1_access"]
+  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.this.identifier}/resource1_access"]
   generate_secret                      = true # Set to true for client_credentials flow
 }
 
@@ -31,7 +31,7 @@ resource "aws_cognito_user_pool_client" "client_first_resource" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes                 = [aws_cognito_resource_server.this.identifier + "/resource1_access"]
+  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.this.identifier}/resource1_access"]
   generate_secret                      = true # Set to true for client_credentials flow
 }
 
