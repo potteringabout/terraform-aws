@@ -222,6 +222,12 @@ resource "aws_api_gateway_usage_plan" "full_access_plan" {
 resource "aws_api_gateway_usage_plan" "limited_access_plan" {
   name = "limited-access-plan"
 
+  # Define default throttling settings to enable fine-grained throttling
+  throttle_settings {
+    burst_limit = 50 # Default burst limit
+    rate_limit  = 20 # Default rate limit
+  }
+
   # Associate only the /resource1 path with this usage plan
   api_stages {
     api_id = aws_api_gateway_rest_api.this.id
@@ -230,15 +236,9 @@ resource "aws_api_gateway_usage_plan" "limited_access_plan" {
     # Fine-grained throttling specifically for Resource 1 (GET)
     throttle {
       path        = "/resource1/GET"
-      burst_limit = 20
-      rate_limit  = 10
+      burst_limit = 20 # Specific burst limit for Resource 1
+      rate_limit  = 10 # Specific rate limit for Resource 1
     }
-  }
-
-  # Set default throttling settings (required to enable fine-grained throttling)
-  throttle_settings {
-    burst_limit = 100
-    rate_limit  = 50
   }
 }
 
