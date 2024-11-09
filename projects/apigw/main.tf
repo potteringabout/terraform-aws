@@ -192,11 +192,11 @@ resource "aws_api_gateway_usage_plan" "limited_access_plan" {
   api_stages {
     api_id = aws_api_gateway_rest_api.this.id
     stage  = aws_api_gateway_deployment.this.stage_name
-    throttle {
+    /*throttle {
       path        = "/resource1/GET" # Limit to Resource 1 GET method
       burst_limit = 100
       rate_limit  = 50
-    }
+    }*/
   }
 }
 
