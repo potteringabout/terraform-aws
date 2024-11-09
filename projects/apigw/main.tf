@@ -9,9 +9,20 @@ resource "aws_cognito_resource_server" "this" {
   identifier   = "com.example.myapp" # Custom identifier for your resource server
   name         = "MyAppResourceServer"
 
+  # Define custom scopes for each resource
   scope {
     scope_name        = "resource1_access"
     scope_description = "Access to Resource 1"
+  }
+
+  scope {
+    scope_name        = "resource2_access"
+    scope_description = "Access to Resource 2"
+  }
+
+  scope {
+    scope_name        = "resource3_access"
+    scope_description = "Access to Resource 3"
   }
 }
 
@@ -21,8 +32,10 @@ resource "aws_cognito_user_pool_client" "client_all_resources" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.this.identifier}/resource1_access"]
-  generate_secret                      = true # Set to true for client_credentials flow
+  allowed_oauth_scopes = ["${aws_cognito_resource_server.this.identifier}/resource1_access",
+    "${aws_cognito_resource_server.this.identifier}/resource2_access",
+  "${aws_cognito_resource_server.this.identifier}/resource3_access"]
+  generate_secret = true # Set to true for client_credentials flow
 }
 
 # Client 2 with access to only the first resource (generate_secret set to true)
@@ -31,8 +44,10 @@ resource "aws_cognito_user_pool_client" "client_first_resource" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.this.identifier}/resource1_access"]
-  generate_secret                      = true # Set to true for client_credentials flow
+  allowed_oauth_scopes = ["${aws_cognito_resource_server.this.identifier}/resource1_access",
+    "${aws_cognito_resource_server.this.identifier}/resource2_access",
+  "${aws_cognito_resource_server.this.identifier}/resource3_access"]
+  generate_secret = true # Set to true for client_credentials flow
 }
 
 resource "aws_api_gateway_rest_api" "this" {
@@ -198,6 +213,11 @@ resource "aws_api_gateway_usage_plan" "full_access_plan" {
     api_id = aws_api_gateway_rest_api.this.id
     stage  = aws_api_gateway_deployment.this.stage_name
   }
+  # Set default throttling settings
+  throttle_settings {
+    burst_limit = 100
+    rate_limit  = 50
+  }
 }
 
 # Usage Plan for Client 2 (Access to only Resource 1)
@@ -212,6 +232,12 @@ resource "aws_api_gateway_usage_plan" "limited_access_plan" {
       burst_limit = 100
       rate_limit  = 50
     }
+  }
+
+  # Set default throttling settings
+  throttle_settings {
+    burst_limit = 100
+    rate_limit  = 50
   }
 }
 
