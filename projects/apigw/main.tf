@@ -44,10 +44,8 @@ resource "aws_cognito_user_pool_client" "client_first_resource" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
-  allowed_oauth_scopes = ["${aws_cognito_resource_server.this.identifier}/resource1_access",
-    "${aws_cognito_resource_server.this.identifier}/resource2_access",
-  "${aws_cognito_resource_server.this.identifier}/resource3_access"]
-  generate_secret = true # Set to true for client_credentials flow
+  allowed_oauth_scopes                 = ["${aws_cognito_resource_server.this.identifier}/resource1_access"]
+  generate_secret                      = true
 }
 
 resource "aws_api_gateway_rest_api" "this" {
@@ -223,18 +221,21 @@ resource "aws_api_gateway_usage_plan" "full_access_plan" {
 # Usage Plan for Client 2 (Access to only Resource 1)
 resource "aws_api_gateway_usage_plan" "limited_access_plan" {
   name = "limited-access-plan"
-  # Only associate this usage plan with the method for Resource 1
+
+  # Associate only the /resource1 path with this usage plan
   api_stages {
     api_id = aws_api_gateway_rest_api.this.id
     stage  = aws_api_gateway_deployment.this.stage_name
+
+    # Fine-grained throttling specifically for Resource 1 (GET)
     throttle {
-      path        = "/resource1/GET" # Limit to Resource 1 GET method
-      burst_limit = 100
-      rate_limit  = 50
+      path        = "/resource1/GET"
+      burst_limit = 20
+      rate_limit  = 10
     }
   }
 
-  # Set default throttling settings
+  # Set default throttling settings (required to enable fine-grained throttling)
   throttle_settings {
     burst_limit = 100
     rate_limit  = 50
