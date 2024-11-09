@@ -2,12 +2,26 @@ resource "aws_cognito_user_pool" "this" {
   name = "example-user-pool"
 }
 
+
+# Define a Resource Server with a custom scope
+resource "aws_cognito_resource_server" "this" {
+  user_pool_id = aws_cognito_user_pool.this.id
+  identifier   = "com.example.myapp" # Custom identifier for your resource server
+  name         = "MyAppResourceServer"
+
+  scope {
+    scope_name        = "resource1_access"
+    scope_description = "Access to Resource 1"
+  }
+}
+
 # Client 1 with access to all resources (generate_secret set to true)
 resource "aws_cognito_user_pool_client" "client_all_resources" {
   name                                 = "client-all-resources"
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
+  allowed_oauth_scopes                 = [aws_cognito_resource_server.this.identifier + "/resource1_access"]
   generate_secret                      = true # Set to true for client_credentials flow
 }
 
@@ -17,6 +31,7 @@ resource "aws_cognito_user_pool_client" "client_first_resource" {
   user_pool_id                         = aws_cognito_user_pool.this.id
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["client_credentials"]
+  allowed_oauth_scopes                 = [aws_cognito_resource_server.this.identifier + "/resource1_access"]
   generate_secret                      = true # Set to true for client_credentials flow
 }
 
@@ -192,11 +207,11 @@ resource "aws_api_gateway_usage_plan" "limited_access_plan" {
   api_stages {
     api_id = aws_api_gateway_rest_api.this.id
     stage  = aws_api_gateway_deployment.this.stage_name
-    /*throttle {
+    throttle {
       path        = "/resource1/GET" # Limit to Resource 1 GET method
       burst_limit = 100
       rate_limit  = 50
-    }*/
+    }
   }
 }
 
