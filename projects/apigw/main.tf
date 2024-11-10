@@ -83,34 +83,37 @@ resource "aws_api_gateway_resource" "resource_three" {
 # Resource 1 method (GET) requiring API key
 resource "aws_api_gateway_method" "method_one" {
   #checkov:skip=CKV2_AWS_53: "Ensure AWS API gateway request is validated"
-  rest_api_id      = aws_api_gateway_rest_api.this.id
-  resource_id      = aws_api_gateway_resource.resource_one.id
-  http_method      = "GET"
-  authorization    = "COGNITO_USER_POOLS"
-  authorizer_id    = aws_api_gateway_authorizer.this.id
-  api_key_required = true # Require API key
+  rest_api_id          = aws_api_gateway_rest_api.this.id
+  resource_id          = aws_api_gateway_resource.resource_one.id
+  http_method          = "GET"
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.this.id
+  api_key_required     = true # Require API key
+  authorization_scopes = ["com.example.myapp/resource1_access"]
 }
 
 # Resource 2 method (GET) requiring API key
 resource "aws_api_gateway_method" "method_two" {
   #checkov:skip=CKV2_AWS_53: "Ensure AWS API gateway request is validated"
-  rest_api_id      = aws_api_gateway_rest_api.this.id
-  resource_id      = aws_api_gateway_resource.resource_two.id
-  http_method      = "GET"
-  authorization    = "COGNITO_USER_POOLS"
-  authorizer_id    = aws_api_gateway_authorizer.this.id
-  api_key_required = true # Require API key
+  rest_api_id          = aws_api_gateway_rest_api.this.id
+  resource_id          = aws_api_gateway_resource.resource_two.id
+  http_method          = "GET"
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.this.id
+  api_key_required     = true # Require API key
+  authorization_scopes = ["com.example.myapp/resource2_access"]
 }
 
 # Resource 3 method (GET) requiring API key
 resource "aws_api_gateway_method" "method_three" {
   #checkov:skip=CKV2_AWS_53: "Ensure AWS API gateway request is validated"
-  rest_api_id      = aws_api_gateway_rest_api.this.id
-  resource_id      = aws_api_gateway_resource.resource_three.id
-  http_method      = "GET"
-  authorization    = "COGNITO_USER_POOLS"
-  authorizer_id    = aws_api_gateway_authorizer.this.id
-  api_key_required = true # Require API key
+  rest_api_id          = aws_api_gateway_rest_api.this.id
+  resource_id          = aws_api_gateway_resource.resource_three.id
+  http_method          = "GET"
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.this.id
+  api_key_required     = true # Require API key
+  authorization_scopes = ["com.example.myapp/resource3_access"]
 }
 
 resource "aws_api_gateway_authorizer" "this" {
