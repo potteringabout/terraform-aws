@@ -92,6 +92,18 @@ resource "aws_api_gateway_method" "method_one" {
   authorization_scopes = ["com.example.myapp/resource1_access"]
 }
 
+# Method Response for Resource 1 (200 Status)
+resource "aws_api_gateway_method_response" "method_response_one" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.resource_one.id
+  http_method = aws_api_gateway_method.method_one.http_method
+  status_code = "200"
+
+  response_models = {
+    "application/json" = "Empty" # Specifies the response model; use "Empty" if no specific model is needed
+  }
+}
+
 # Resource 2 method (GET) requiring API key
 resource "aws_api_gateway_method" "method_two" {
   #checkov:skip=CKV2_AWS_53: "Ensure AWS API gateway request is validated"
@@ -104,6 +116,18 @@ resource "aws_api_gateway_method" "method_two" {
   authorization_scopes = ["com.example.myapp/resource2_access"]
 }
 
+# Method Response for Resource 1 (200 Status)
+resource "aws_api_gateway_method_response" "method_response_two" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.resource_two.id
+  http_method = aws_api_gateway_method.method_one.http_method
+  status_code = "200"
+
+  response_models = {
+    "application/json" = "Empty" # Specifies the response model; use "Empty" if no specific model is needed
+  }
+}
+
 # Resource 3 method (GET) requiring API key
 resource "aws_api_gateway_method" "method_three" {
   #checkov:skip=CKV2_AWS_53: "Ensure AWS API gateway request is validated"
@@ -114,6 +138,18 @@ resource "aws_api_gateway_method" "method_three" {
   authorizer_id        = aws_api_gateway_authorizer.this.id
   api_key_required     = true # Require API key
   authorization_scopes = ["com.example.myapp/resource3_access"]
+}
+
+# Method Response for Resource 1 (200 Status)
+resource "aws_api_gateway_method_response" "method_response_three" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_resource.resource_three.id
+  http_method = aws_api_gateway_method.method_one.http_method
+  status_code = "200"
+
+  response_models = {
+    "application/json" = "Empty" # Specifies the response model; use "Empty" if no specific model is needed
+  }
 }
 
 resource "aws_api_gateway_authorizer" "this" {
@@ -140,7 +176,7 @@ resource "aws_api_gateway_integration_response" "integration_response_one" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.resource_one.id
   http_method = aws_api_gateway_method.method_one.http_method
-  status_code = "200"
+  status_code = "200" # This must match the method response status code
 
   response_templates = {
     "application/json" = "{\"message\": \"Hello from Resource 1!\"}"
@@ -163,7 +199,7 @@ resource "aws_api_gateway_integration_response" "integration_response_two" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.resource_two.id
   http_method = aws_api_gateway_method.method_two.http_method
-  status_code = "200"
+  status_code = "200" # This must match the method response status code
 
   response_templates = {
     "application/json" = "{\"message\": \"Hello from Resource 2!\"}"
@@ -186,7 +222,7 @@ resource "aws_api_gateway_integration_response" "integration_response_three" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   resource_id = aws_api_gateway_resource.resource_three.id
   http_method = aws_api_gateway_method.method_three.http_method
-  status_code = "200"
+  status_code = "200" # This must match the method response status code
 
   response_templates = {
     "application/json" = "{\"message\": \"Hello from Resource 3!\"}"
