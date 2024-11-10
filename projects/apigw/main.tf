@@ -2,6 +2,12 @@ resource "aws_cognito_user_pool" "this" {
   name = "example-user-pool"
 }
 
+# Define the User Pool Domain
+resource "aws_cognito_user_pool_domain" "this" {
+  domain       = "myapigwpool" # Replace with a unique domain prefix
+  user_pool_id = aws_cognito_user_pool.this.id
+}
+
 
 # Define a Resource Server with a custom scope
 resource "aws_cognito_resource_server" "this" {
