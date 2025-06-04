@@ -93,6 +93,8 @@ variable "vpc" {
     {
       cidr = string
       name = string
+      ingress = bool
+      egress = bool
       subnets = map(
         list(
           object(
@@ -136,10 +138,6 @@ variable "vpc" {
         }
       ]
     }
-
-
-
-
 
   }
 }
