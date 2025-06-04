@@ -91,10 +91,10 @@ variable "project_full" {
 variable "vpc" {
   type = object(
     {
-      cidr = string
-      name = string
+      cidr    = string
+      name    = string
       ingress = bool
-      egress = bool
+      egress  = bool
       subnets = map(
         list(
           object(
