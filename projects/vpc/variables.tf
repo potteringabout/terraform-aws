@@ -109,7 +109,7 @@ variable "vpc" {
 
   default = {
     cidr    = "10.0.0.0/16"
-    name    = "blah"
+    name    = "potteringabout"
     ingress = true
     egress  = false
     subnets = {
