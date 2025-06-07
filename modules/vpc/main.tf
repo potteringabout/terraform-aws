@@ -12,6 +12,6 @@ resource "aws_vpc" "main" {
   # checkov:skip=CKV2_AWS_12: "Ensure the default security group of every VPC restricts all traffic"
   cidr_block = var.vpc["cidr"]
   tags = {
-    Name = "${var.project}-${var.environment}-vpc"
+    Name = "${var.vpc["name"]}-${var.environment}-vpc"
   }
 }
