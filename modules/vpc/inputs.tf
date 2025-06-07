@@ -3,6 +3,16 @@ variable "region" {
   default = "eu-west-2"
 }
 
+variable "project" {
+  type    = string
+  default = "potterinabout"
+}
+
+variable "environment" {
+  type    = string
+  default = "dev"
+}
+
 variable "vpc" {
   type = object(
     {

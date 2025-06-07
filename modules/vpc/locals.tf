@@ -9,7 +9,7 @@ locals {
     for network_key, network in var.vpc.subnets : [
       for idx, subnet in network : {
         #subnet_name       = "${network_key}${idx}"
-        subnet_name       = format("%s%s", "${network_key}${var.region}", element(["a", "b", "c"], idx))
+        subnet_name       = format("%s%s%s%s", "${var.project}-${var.environment}-${network_key}-${var.region}", element(["a", "b", "c"], idx))
         cidr              = subnet.cidr
         availability_zone = format("%s%s", var.region, element(["a", "b", "c"], idx))
         zone              = network_key
